@@ -7,7 +7,12 @@
 
 html,
 body {
-  background: var(--background);
+  background-color: #faf0e6;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    #e8d9c5 28px
+  );
   color: var(--foreground);
 }
 
