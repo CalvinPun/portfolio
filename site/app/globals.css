@@ -9,6 +9,12 @@
   --foreground: #1f1f1f;
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-hand: var(--font-caveat), cursive;
+  /* Polaroid — keep in sync with PolaroidCard.tsx Image width/height */
+  --photo-w: 300px;
+  --photo-h: 350px;
+  --photo-border: 8px;
+  /* NYU Violet (brand) */
+  --nyu-violet: #57068c;
 }
 
 html {
@@ -107,12 +113,28 @@ a {
   font-family: var(--font-hand);
 }
 
-/* Polaroid-style photo + tape (scrapbook hero) */
+.text-nyu-violet {
+  color: var(--nyu-violet);
+}
+
+/* Polaroid — tilt applies to image + caption together */
+.polaroid-tilt {
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(-3.5deg);
+  transition: transform 0.3s ease;
+}
+
+.polaroid-tilt:hover {
+  transform: rotate(-1deg) scale(1.02);
+}
+
+/* Photo + corner tapes only (no rotation here — see .polaroid-tilt) */
 .photo-frame {
   position: relative;
   isolation: isolate;
-  transform: rotate(-3.5deg);
-  transition: transform 0.3s ease;
   width: fit-content;
 }
 
@@ -121,17 +143,22 @@ a {
   z-index: 0;
 }
 
-.photo-frame:hover {
-  transform: rotate(-1deg) scale(1.02);
+/* Caption: same width as image, follows bottom edge angle via .polaroid-tilt */
+.photo-caption {
+  width: var(--photo-w);
+  margin: 0;
+  padding-top: 0.625rem;
+  text-align: center;
+  line-height: 1.35;
 }
 
 .photo-img {
   display: block;
-  width: 240px;
-  height: 280px;
+  width: var(--photo-w);
+  height: var(--photo-h);
   object-fit: cover;
-  border: 6px solid #fff;
-  box-shadow: 3px 5px 18px rgba(80, 50, 20, 0.18);
+  border: var(--photo-border) solid #fff;
+  box-shadow: 4px 6px 22px rgba(80, 50, 20, 0.18);
 }
 
 .photo-img--placeholder {
@@ -170,46 +197,46 @@ a {
   transform: translate(-50%, -42%) rotate(1.25deg);
 }
 
-/* Corner tapes — hug outer corners (less overlap on the photo); pivot from corner side */
+/* Corner tapes — scaled with larger polaroid */
 .tape-corner {
-  width: 48px;
-  height: 18px;
+  width: 56px;
+  height: 20px;
 }
 
 .tape-corner-tl {
-  top: 21px;
-  left: 3px;
+  top: 26px;
+  left: 4px;
   transform: rotate(-44deg);
   transform-origin: left center;
 }
 
 .tape-corner-tr {
-  top: 21px;
-  right: 3px;
+  top: 26px;
+  right: 4px;
   transform: rotate(44deg);
   transform-origin: right center;
 }
 
 .tape-corner-bl {
-  bottom: 21px;
-  left: 3px;
+  bottom: 26px;
+  left: 4px;
   transform: rotate(44deg);
   transform-origin: left center;
 }
 
 .tape-corner-br {
-  bottom: 21px;
-  right: 3px;
+  bottom: 26px;
+  right: 4px;
   transform: rotate(-44deg);
   transform-origin: right center;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .photo-frame {
+  .polaroid-tilt {
     transition: none;
   }
 
-  .photo-frame:hover {
+  .polaroid-tilt:hover {
     transform: rotate(-3.5deg);
   }
 }

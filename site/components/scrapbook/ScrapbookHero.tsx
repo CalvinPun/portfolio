@@ -13,24 +13,26 @@ export function ScrapbookHero() {
       <Container className="max-w-6xl">
         <div className="relative">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-8 lg:gap-y-10">
-            <div className="hero-pop hero-pop-delay-1 flex justify-center lg:col-span-5 lg:justify-start lg:pt-4">
-              <PolaroidCard
-                caption={polaroidCaption}
-                photoSrc={photoSrc}
-                photoPlaceholderText={photoPlaceholderText}
-              />
+            <div className="flex flex-col items-center gap-8 lg:col-span-5 lg:flex-row lg:items-start lg:justify-start lg:gap-5 lg:pt-4">
+              <div className="hero-pop hero-pop-delay-1 flex shrink-0 justify-center">
+                <PolaroidCard
+                  caption={polaroidCaption}
+                  photoSrc={photoSrc}
+                  photoPlaceholderText={photoPlaceholderText}
+                />
+              </div>
+              <div className="hero-pop hero-pop-delay-3 w-full max-w-sm shrink-0 lg:mt-64 lg:ml-6 lg:w-auto lg:max-w-[22rem] xl:mt-72 xl:ml-8">
+                <LocationSticky text={locationNote} />
+              </div>
             </div>
             <div className="hero-pop hero-pop-delay-2 flex justify-center lg:col-span-7 lg:justify-end lg:pr-2 xl:pr-8">
               <MainHeroSticky
                 headline={sticky.headline}
-                body={sticky.body}
-                ctaWork={sticky.ctaWork}
-                ctaHello={sticky.ctaHello}
+                bodyLead={sticky.bodyLead}
+                bodyAccent={sticky.bodyAccent}
+                social={sticky.social}
               />
             </div>
-          </div>
-          <div className="hero-pop hero-pop-delay-3 mt-2 flex justify-center lg:absolute lg:bottom-[-8px] lg:right-0 lg:mt-0 lg:justify-end xl:right-4">
-            <LocationSticky text={locationNote} />
           </div>
         </div>
       </Container>
