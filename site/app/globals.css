@@ -8,6 +8,7 @@
   --background: #faf0e6;
   --foreground: #1f1f1f;
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  /* --font-caveat is set on <html> by next/font; --font-hand must resolve there */
   --font-hand: var(--font-caveat), cursive;
   /* Polaroid — keep in sync with PolaroidCard.tsx Image width/height */
   --photo-w: 300px;
@@ -204,12 +205,6 @@ a {
   );
 }
 
-/* Blue sticky notes — same translucency + border weight as yellow tape */
-.tape--blue {
-  background: rgba(195, 225, 250, 0.65);
-  border: 0.5px solid rgba(110, 150, 185, 0.32);
-}
-
 /* Top-center strip — straddles top edge so it reads “taped” to the page behind */
 .tape-sticky-top {
   width: 52px;
@@ -343,7 +338,7 @@ a {
     0 20px 48px -14px rgba(120, 60, 80, 0.16);
 }
 
-/* ASCII post-it — !important beats body font-sans + preflight so glyphs stay on a grid */
+/* ASCII post-it — monospace so art stays aligned; body copy uses .font-hand elsewhere */
 .ascii-art {
   font-family:
     ui-monospace,

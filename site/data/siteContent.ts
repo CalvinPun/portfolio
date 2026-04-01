@@ -2,7 +2,8 @@ export const siteContent = {
   hero: {
     polaroidCaption: "— that's me! :)",
     sticky: {
-      headline: "hey, i'm calvin 👋",
+      headline: "hey, i'm calvin",
+      headlineEmoji: "👋",
       bodyLead: "cs + math @ ",
       bodyAccent: "nyu",
       social: {

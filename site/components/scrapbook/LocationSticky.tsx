@@ -28,12 +28,12 @@ export function LocationSticky({ text }: LocationStickyProps) {
         "relative w-fit max-w-[13rem] shrink-0 overflow-visible rounded-[3px]",
         "border border-sky-900/[0.07]",
         "bg-gradient-to-b from-[#f0f7fc] to-[#e2edf6]",
-        "px-5 py-4",
+        "px-5 py-2.5",
         "sm:max-w-[14rem]",
       ].join(" ")}
     >
       <div className="tape tape-sticky-top tape--blue" aria-hidden />
-      <div className="relative z-0 flex items-center gap-3 pt-6">
+      <div className="relative z-0 flex items-center gap-3 pt-4">
         <MapPinIcon />
         <p className="font-hand text-[1.35rem] leading-none tracking-[0.2em] text-stone-800 sm:text-2xl">
           <span className="uppercase">{text}</span>

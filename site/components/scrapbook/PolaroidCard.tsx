@@ -58,7 +58,9 @@ export function PolaroidCard({ caption, photoSrc, photoPlaceholderText }: Polaro
           <div className="tape tape-corner tape-corner-bl" aria-hidden />
           <div className="tape tape-corner tape-corner-br" aria-hidden />
         </div>
-        <p className="photo-caption font-hand text-xl text-stone-800">{caption}</p>
+        <p className="photo-caption font-hand text-2xl leading-snug text-stone-800 sm:text-[1.75rem]">
+          {caption}
+        </p>
       </div>
     </div>
   );

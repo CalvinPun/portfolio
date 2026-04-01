@@ -34,6 +34,7 @@ export function ScrapbookHero() {
             <div className="hero-pop hero-pop-delay-2 flex max-lg:order-4 justify-center lg:col-span-6 lg:row-start-1 lg:col-start-7 lg:justify-end lg:pr-2 xl:pr-8">
               <MainHeroSticky
                 headline={sticky.headline}
+                headlineEmoji={sticky.headlineEmoji}
                 bodyLead={sticky.bodyLead}
                 bodyAccent={sticky.bodyAccent}
                 social={sticky.social}

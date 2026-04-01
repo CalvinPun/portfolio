@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.variable} ${caveat.variable} font-sans antialiased`}>
+    <html lang="en" className={`${dmSans.variable} ${caveat.variable}`}>
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>
