@@ -13,7 +13,7 @@ export const siteContent = {
         email: "cp4295@nyu.edu",
       },
     },
-    locationNote: "New York City · CS student · open to opportunities",
+    locationNote: "nyc",
     /** Shown when `photoSrc` is null */
     photoPlaceholderText: "your photo here",
     /** Set to e.g. "/portrait.jpg" when you add a photo to `public/` */

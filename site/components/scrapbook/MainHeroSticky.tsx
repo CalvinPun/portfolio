@@ -17,7 +17,7 @@ export function MainHeroSticky({ headline, bodyLead, bodyAccent, social }: MainH
   return (
     <div className="note-curl relative w-full max-w-xl rotate-[2deg] overflow-visible rounded-sm bg-[#fff8e8] px-8 py-9 shadow-[0_2px_8px_rgba(0,0,0,0.06),0_16px_40px_-12px_rgba(0,0,0,0.14)] sm:px-10 sm:py-10">
       <div className="tape tape-sticky-top" aria-hidden />
-      <div className="relative z-0 pt-1">
+      <div className="relative z-0 pt-6 sm:pt-7">
         <h1 className="font-hand text-4xl leading-tight text-stone-900 sm:text-[2.75rem]">
           {headline}
         </h1>
