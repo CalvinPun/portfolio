@@ -24,11 +24,11 @@ export function LocationSticky({ text }: LocationStickyProps) {
   return (
     <div
       className={[
-        "note-curl relative w-full max-w-[13rem] -rotate-[2deg] overflow-visible rounded-[3px]",
+        "note-curl sticky-note-interactive sticky-note-interactive--blue",
+        "relative w-fit max-w-[13rem] shrink-0 overflow-visible rounded-[3px]",
         "border border-sky-900/[0.07]",
         "bg-gradient-to-b from-[#f0f7fc] to-[#e2edf6]",
         "px-5 py-4",
-        "shadow-[0_1px_2px_rgba(15,40,60,0.06),0_8px_24px_-6px_rgba(15,50,80,0.12)]",
         "sm:max-w-[14rem]",
       ].join(" ")}
     >

@@ -98,11 +98,16 @@ a {
   animation-delay: 0.3s;
 }
 
+.hero-pop-delay-4 {
+  animation-delay: 0.42s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-pop,
   .hero-pop-delay-1,
   .hero-pop-delay-2,
-  .hero-pop-delay-3 {
+  .hero-pop-delay-3,
+  .hero-pop-delay-4 {
     animation: none;
     opacity: 1;
     transform: none;
@@ -278,4 +283,105 @@ a {
   );
   border-bottom-right-radius: 3px;
   pointer-events: none;
+}
+
+/* Sticky notes — lift on hover (CSS vars so transform is one rule; avoids Tailwind/cascade fights) */
+.sticky-note-interactive {
+  --sticky-lift: 0px;
+  transform: rotate(var(--sticky-rotate)) translateY(var(--sticky-lift));
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+}
+
+.sticky-note-interactive:hover {
+  --sticky-lift: -8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-note-interactive:hover {
+    --sticky-lift: 0px;
+  }
+}
+
+.sticky-note-interactive--yellow {
+  --sticky-rotate: 2deg;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 16px 40px -12px rgba(0, 0, 0, 0.14);
+}
+
+.sticky-note-interactive--yellow:hover {
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.1),
+    0 22px 50px -14px rgba(0, 0, 0, 0.18);
+}
+
+.sticky-note-interactive--blue {
+  --sticky-rotate: -2deg;
+  box-shadow:
+    0 1px 2px rgba(15, 40, 60, 0.06),
+    0 8px 24px -6px rgba(15, 50, 80, 0.12);
+}
+
+.sticky-note-interactive--blue:hover {
+  box-shadow:
+    0 4px 14px rgba(15, 40, 60, 0.12),
+    0 14px 36px -8px rgba(15, 50, 80, 0.16);
+}
+
+.sticky-note-interactive--pink {
+  --sticky-rotate: 5deg;
+  box-shadow:
+    0 2px 8px rgba(90, 40, 60, 0.06),
+    0 14px 36px -12px rgba(120, 60, 80, 0.12);
+}
+
+.sticky-note-interactive--pink:hover {
+  box-shadow:
+    0 4px 14px rgba(90, 40, 60, 0.09),
+    0 20px 48px -14px rgba(120, 60, 80, 0.16);
+}
+
+/* ASCII post-it — !important beats body font-sans + preflight so glyphs stay on a grid */
+.ascii-art {
+  font-family:
+    ui-monospace,
+    "Cascadia Code",
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    "Courier New",
+    monospace !important;
+  font-synthesis: none;
+  font-variant-ligatures: none;
+  font-variant-numeric: normal;
+  letter-spacing: 0;
+  word-spacing: 0;
+  white-space: pre;
+}
+
+/* ASCII fills the small square */
+.ascii-sticky-text {
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  .ascii-sticky-text {
+    font-size: 0.82rem;
+  }
+}
+
+/* Wider Shift_JIS–style art — smaller type so lines fit */
+.ascii-sticky-text--wide {
+  font-size: 0.46rem;
+  line-height: 1.12;
+}
+
+@media (min-width: 640px) {
+  .ascii-sticky-text--wide {
+    font-size: 0.52rem;
+  }
 }
