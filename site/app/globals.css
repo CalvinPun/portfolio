@@ -1,19 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
   --background: #faf0e6;
   --foreground: #1f1f1f;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
 }
 
-html,
+html {
+  height: 100%;
+}
+
 body {
+  min-height: 100%;
+  background-color: #faf0e6;
+  color: var(--foreground);
+}
+
+/* Lined paper layer — fades in on load without affecting text */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background-color: #faf0e6;
   background-image: repeating-linear-gradient(
     transparent,
     transparent 27px,
     #e8d9c5 28px
   );
-  color: var(--foreground);
+  opacity: 0;
+  animation: backgroundFadeIn 1.5s ease-out forwards;
+}
+
+@keyframes backgroundFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 * {
@@ -23,4 +61,173 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Scrapbook hero — staggered pop-in */
+@keyframes hero-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.hero-pop {
+  opacity: 0;
+  animation: hero-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-pop-delay-1 {
+  animation-delay: 0.08s;
+}
+
+.hero-pop-delay-2 {
+  animation-delay: 0.18s;
+}
+
+.hero-pop-delay-3 {
+  animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pop,
+  .hero-pop-delay-1,
+  .hero-pop-delay-2,
+  .hero-pop-delay-3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.font-hand {
+  font-family: var(--font-hand);
+}
+
+/* Polaroid-style photo + tape (scrapbook hero) */
+.photo-frame {
+  position: relative;
+  isolation: isolate;
+  transform: rotate(-3.5deg);
+  transition: transform 0.3s ease;
+  width: fit-content;
+}
+
+.photo-frame__media {
+  position: relative;
+  z-index: 0;
+}
+
+.photo-frame:hover {
+  transform: rotate(-1deg) scale(1.02);
+}
+
+.photo-img {
+  display: block;
+  width: 240px;
+  height: 280px;
+  object-fit: cover;
+  border: 6px solid #fff;
+  box-shadow: 3px 5px 18px rgba(80, 50, 20, 0.18);
+}
+
+.photo-img--placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgb(231 229 228 / 0.9);
+  color: #78716c;
+}
+
+.tape {
+  position: absolute;
+  z-index: 2;
+  background: rgba(255, 240, 180, 0.65);
+  border: 0.5px solid rgba(200, 180, 100, 0.3);
+}
+
+/* Blue sticky notes — same translucency + border weight as yellow tape */
+.tape--blue {
+  background: rgba(195, 225, 250, 0.65);
+  border: 0.5px solid rgba(110, 150, 185, 0.32);
+}
+
+/* Top-center strip on post-its (same size feel as .tape-corner) */
+.tape-sticky-top {
+  width: 48px;
+  height: 18px;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -42%) rotate(-1deg);
+}
+
+.tape-sticky-top.tape--blue {
+  transform: translate(-50%, -42%) rotate(1.25deg);
+}
+
+/* Corner tapes — hug outer corners (less overlap on the photo); pivot from corner side */
+.tape-corner {
+  width: 48px;
+  height: 18px;
+}
+
+.tape-corner-tl {
+  top: 21px;
+  left: 3px;
+  transform: rotate(-44deg);
+  transform-origin: left center;
+}
+
+.tape-corner-tr {
+  top: 21px;
+  right: 3px;
+  transform: rotate(44deg);
+  transform-origin: right center;
+}
+
+.tape-corner-bl {
+  bottom: 21px;
+  left: 3px;
+  transform: rotate(44deg);
+  transform-origin: left center;
+}
+
+.tape-corner-br {
+  bottom: 21px;
+  right: 3px;
+  transform: rotate(-44deg);
+  transform-origin: right center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame {
+    transition: none;
+  }
+
+  .photo-frame:hover {
+    transform: rotate(-3.5deg);
+  }
+}
+
+/* Subtle folded corner on sticky notes */
+.note-curl::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: linear-gradient(
+    to top left,
+    rgba(0, 0, 0, 0.07) 0%,
+    rgba(0, 0, 0, 0.02) 45%,
+    transparent 55%
+  );
+  border-bottom-right-radius: 3px;
+  pointer-events: none;
 }

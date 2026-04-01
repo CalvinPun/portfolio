@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
+import { Caveat, DM_Sans } from "next/font/google";
 import "./globals.css";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+});
 
 export const metadata: Metadata = {
   title: "Calvin Portfolio",
@@ -13,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${dmSans.variable} ${caveat.variable} font-sans antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
