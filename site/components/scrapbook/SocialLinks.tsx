@@ -160,7 +160,7 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
           aria-live="polite"
           aria-atomic="true"
         >
-          {copied ? "Copied!" : ""}
+          {copied ? "copied!" : ""}
         </span>
       </div>
     </nav>
