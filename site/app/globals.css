@@ -11,15 +11,15 @@
   /* --font-caveat is set on <html> by next/font; --font-hand must resolve there */
   --font-hand: var(--font-caveat), cursive;
   /* Polaroid — keep in sync with PolaroidCard.tsx Image width/height */
-  --photo-w: 300px;
-  --photo-h: 350px;
-  --photo-border: 8px;
+  --photo-w: 330px;
+  --photo-h: 385px;
+  --photo-border: 9px;
   /* NYU Violet (brand) */
   --nyu-violet: #57068c;
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -112,6 +112,53 @@ a {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* down-arrow.svg — starts after hero-pop finishes (max delay 0.42s + duration 0.65s), then shaft → head */
+:root {
+  --draw-arrow-start-delay: 1.15s;
+  --draw-arrow-shaft-dur: 2.35s;
+  --draw-arrow-head-dur: 0.8s;
+}
+
+@keyframes drawArrowShaft {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drawArrowHead {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.draw-arrow-path--shaft {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawArrowShaft var(--draw-arrow-shaft-dur) cubic-bezier(0.33, 1, 0.68, 1)
+    var(--draw-arrow-start-delay) forwards;
+}
+
+.draw-arrow-path--head {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawArrowHead var(--draw-arrow-head-dur) cubic-bezier(0.33, 1, 0.68, 1)
+    calc(var(--draw-arrow-start-delay) + var(--draw-arrow-shaft-dur)) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-arrow-path--shaft,
+  .draw-arrow-path--head {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }
 
@@ -220,34 +267,34 @@ a {
 
 /* Corner tapes — scaled with larger polaroid */
 .tape-corner {
-  width: 64px;
-  height: 23px;
+  width: 70px;
+  height: 25px;
 }
 
 .tape-corner-tl {
-  top: 26px;
-  left: -6px;
+  top: 29px;
+  left: -7px;
   transform: rotate(-44deg);
   transform-origin: left center;
 }
 
 .tape-corner-tr {
-  top: 26px;
-  right: -6px;
+  top: 29px;
+  right: -7px;
   transform: rotate(44deg);
   transform-origin: right center;
 }
 
 .tape-corner-bl {
-  bottom: 26px;
-  left: -6px;
+  bottom: 29px;
+  left: -7px;
   transform: rotate(44deg);
   transform-origin: left center;
 }
 
 .tape-corner-br {
-  bottom: 26px;
-  right: -6px;
+  bottom: 29px;
+  right: -7px;
   transform: rotate(-44deg);
   transform-origin: right center;
 }
@@ -359,24 +406,24 @@ a {
 
 /* ASCII fills the small square */
 .ascii-sticky-text {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   line-height: 1.25;
 }
 
 @media (min-width: 640px) {
   .ascii-sticky-text {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
   }
 }
 
 /* Wider Shift_JIS–style art — smaller type so lines fit */
 .ascii-sticky-text--wide {
-  font-size: 0.46rem;
+  font-size: 0.51rem;
   line-height: 1.12;
 }
 
 @media (min-width: 640px) {
   .ascii-sticky-text--wide {
-    font-size: 0.52rem;
+    font-size: 0.57rem;
   }
 }

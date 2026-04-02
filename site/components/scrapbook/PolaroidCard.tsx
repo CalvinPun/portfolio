@@ -14,7 +14,7 @@ function PhotoPlaceholder({ label }: { label: string }) {
       aria-label={label}
     >
       <svg
-        className="h-14 w-14 opacity-45"
+        className="h-16 w-16 opacity-45"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -28,7 +28,7 @@ function PhotoPlaceholder({ label }: { label: string }) {
         />
         <circle cx="12" cy="7" r="4" />
       </svg>
-      <span className="font-hand text-xl text-stone-600">{label}</span>
+      <span className="font-hand text-2xl text-stone-600">{label}</span>
     </div>
   );
 }
@@ -44,8 +44,8 @@ export function PolaroidCard({ caption, photoSrc, photoPlaceholderText }: Polaro
               <Image
                 src={photoSrc}
                 alt="Portrait"
-                width={300}
-                height={350}
+                width={330}
+                height={385}
                 className="photo-img"
                 priority
               />
@@ -58,7 +58,7 @@ export function PolaroidCard({ caption, photoSrc, photoPlaceholderText }: Polaro
           <div className="tape tape-corner tape-corner-bl" aria-hidden />
           <div className="tape tape-corner tape-corner-br" aria-hidden />
         </div>
-        <p className="photo-caption font-hand text-2xl leading-snug text-stone-800 sm:text-[1.75rem]">
+        <p className="photo-caption font-hand text-3xl leading-snug text-stone-800 sm:text-[2rem]">
           {caption}
         </p>
       </div>

@@ -14,24 +14,24 @@ export function ScrapbookHero() {
       <Container className="max-w-6xl">
         <div className="relative">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
-            <div className="hero-pop hero-pop-delay-1 flex max-lg:order-1 justify-center lg:col-span-4 lg:row-start-1">
+            <div className="hero-pop hero-pop-delay-1 flex order-1 justify-center lg:order-none lg:col-span-4 lg:row-start-1">
               <PolaroidCard
                 caption={polaroidCaption}
                 photoSrc={photoSrc}
                 photoPlaceholderText={photoPlaceholderText}
               />
             </div>
-            <div className="flex max-lg:order-2 flex-col items-center gap-5 lg:col-span-2 lg:row-start-1 lg:col-start-5 lg:self-center">
-              <div className="hero-pop hero-pop-delay-4 flex shrink-0 justify-center">
+            <div className="flex order-3 flex-col items-center gap-5 lg:order-none lg:col-span-2 lg:row-start-1 lg:col-start-5 lg:self-center">
+              <div className="hero-pop hero-pop-delay-3 flex shrink-0 justify-center">
                 <div className="-translate-y-3 lg:-translate-y-10">
                   <AsciiCatSticky />
                 </div>
               </div>
-              <div className="hero-pop hero-pop-delay-3 flex w-full justify-center">
+              <div className="hero-pop hero-pop-delay-4 flex w-full justify-center">
                 <LocationSticky text={locationNote} />
               </div>
             </div>
-            <div className="hero-pop hero-pop-delay-2 flex max-lg:order-4 justify-center lg:col-span-6 lg:row-start-1 lg:col-start-7 lg:justify-end lg:pr-2 xl:pr-8">
+            <div className="hero-pop hero-pop-delay-2 flex order-2 justify-center lg:order-none lg:col-span-6 lg:row-start-1 lg:col-start-7 lg:justify-end lg:pr-0 xl:pr-2">
               <MainHeroSticky
                 headline={sticky.headline}
                 headlineEmoji={sticky.headlineEmoji}
