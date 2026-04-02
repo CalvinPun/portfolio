@@ -1,20 +1,13 @@
 import { Container } from "@/components/layout/Container";
 import { AsciiCatSticky } from "@/components/scrapbook/AsciiCatSticky";
-import { CurrentlyListeningSticky } from "@/components/scrapbook/CurrentlyListeningSticky";
 import { LocationSticky } from "@/components/scrapbook/LocationSticky";
 import { MainHeroSticky } from "@/components/scrapbook/MainHeroSticky";
 import { PolaroidCard } from "@/components/scrapbook/PolaroidCard";
 import { siteContent } from "@/data/siteContent";
 
 export function ScrapbookHero() {
-  const {
-    polaroidCaption,
-    sticky,
-    locationNote,
-    photoSrc,
-    photoPlaceholderText,
-    currentlyListening,
-  } = siteContent.hero;
+  const { polaroidCaption, sticky, locationNote, photoSrc, photoPlaceholderText } =
+    siteContent.hero;
 
   return (
     <section className="px-4 sm:px-6" aria-label="Introduction">
@@ -36,13 +29,6 @@ export function ScrapbookHero() {
               </div>
               <div className="hero-pop hero-pop-delay-3 flex w-full justify-center">
                 <LocationSticky text={locationNote} />
-              </div>
-              <div className="hero-pop hero-pop-delay-5 flex w-full justify-center">
-                <CurrentlyListeningSticky
-                  label={currentlyListening.label}
-                  idleLine={currentlyListening.idleLine}
-                  fallback={currentlyListening.fallback}
-                />
               </div>
             </div>
             <div className="hero-pop hero-pop-delay-2 flex max-lg:order-4 justify-center lg:col-span-6 lg:row-start-1 lg:col-start-7 lg:justify-end lg:pr-2 xl:pr-8">

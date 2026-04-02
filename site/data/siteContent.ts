@@ -15,15 +15,6 @@ export const siteContent = {
       },
     },
     locationNote: "nyc",
-    /** Shown until `SPOTIFY_*` env vars are set — see `lib/spotifyNowPlaying.ts` */
-    currentlyListening: {
-      label: "currently listening to",
-      idleLine: "nothing playing rn",
-      fallback: {
-        title: "—",
-        artist: "connect spotify to go live",
-      },
-    },
     /** Shown when `photoSrc` is null */
     photoPlaceholderText: "your photo here",
     /** Set to e.g. "/portrait.jpg" when you add a photo to `public/` */

@@ -103,17 +103,12 @@ a {
   animation-delay: 0.42s;
 }
 
-.hero-pop-delay-5 {
-  animation-delay: 0.54s;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-pop,
   .hero-pop-delay-1,
   .hero-pop-delay-2,
   .hero-pop-delay-3,
-  .hero-pop-delay-4,
-  .hero-pop-delay-5 {
+  .hero-pop-delay-4 {
     animation: none;
     opacity: 1;
     transform: none;
@@ -221,12 +216,6 @@ a {
 
 .tape-sticky-top.tape--blue {
   transform: translate(-50%, -72%) rotate(1.25deg);
-}
-
-.tape-sticky-top.tape--green {
-  transform: translate(-50%, -72%) rotate(-1.75deg);
-  background: rgba(220, 245, 230, 0.72);
-  border-color: rgba(100, 140, 110, 0.28);
 }
 
 /* Corner tapes — scaled with larger polaroid */
@@ -347,19 +336,6 @@ a {
   box-shadow:
     0 4px 14px rgba(90, 40, 60, 0.09),
     0 20px 48px -14px rgba(120, 60, 80, 0.16);
-}
-
-.sticky-note-interactive--green {
-  --sticky-rotate: -3deg;
-  box-shadow:
-    0 2px 8px rgba(20, 60, 45, 0.06),
-    0 14px 36px -12px rgba(30, 80, 55, 0.12);
-}
-
-.sticky-note-interactive--green:hover {
-  box-shadow:
-    0 4px 14px rgba(20, 60, 45, 0.1),
-    0 18px 44px -12px rgba(30, 80, 55, 0.16);
 }
 
 /* ASCII post-it — monospace so art stays aligned; body copy uses .font-hand elsewhere */

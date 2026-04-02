@@ -1,7 +1,8 @@
 /**
  * Spotify “currently playing” for a single user (refresh token flow).
  * `.env.local`: SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
- * (OAuth once via Spotify dashboard redirect URI + any auth flow you use).
+ *
+ * Used by `GET /api/now-playing` — wire a client fetch to this route from About or elsewhere.
  */
 
 export type NowPlayingResult =
@@ -13,6 +14,7 @@ export type NowPlayingResult =
       title: string;
       artist: string;
       url: string | null;
+      albumImageUrl: string | null;
     };
 
 type SpotifyTokenResponse = {
@@ -24,12 +26,26 @@ type SpotifyCurrentlyPlaying = {
   item: SpotifyPlayingItem | null;
 };
 
+type SpotifyImage = { url?: string; width?: number; height?: number };
+
 type SpotifyPlayingItem = {
   name?: string;
   artists?: { name?: string }[];
   show?: { name?: string };
+  images?: SpotifyImage[];
+  album?: { images?: SpotifyImage[] };
   external_urls?: { spotify?: string };
 };
+
+function pickCoverImageUrl(item: SpotifyPlayingItem): string | null {
+  const pool =
+    item.album?.images?.length ? item.album.images : (item.images ?? []);
+  const withUrl = pool.filter((i): i is SpotifyImage & { url: string } => typeof i?.url === "string");
+  if (!withUrl.length) return null;
+  const sorted = [...withUrl].sort((a, b) => (a.width ?? 9999) - (b.width ?? 9999));
+  const preferred = sorted.find((i) => (i.width ?? 0) >= 48);
+  return (preferred ?? sorted[sorted.length - 1]).url;
+}
 
 function isConfigured(): boolean {
   return Boolean(
@@ -115,6 +131,7 @@ export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
     item.show && typeof item.show.name === "string" ? item.show.name : "";
   const artist = fromArtists || fromShow || "Spotify";
   const url = item.external_urls?.spotify ?? null;
+  const albumImageUrl = pickCoverImageUrl(item);
 
   return {
     configured: true,
@@ -122,5 +139,6 @@ export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
     title,
     artist,
     url,
+    albumImageUrl,
   };
 }
