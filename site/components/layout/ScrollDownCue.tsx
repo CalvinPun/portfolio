@@ -9,6 +9,8 @@ const ARROW_VIEW_H = 1179;
 /** Near-black graphite; not pure #000 so it reads like pencil on paper */
 const PENCIL_STROKE = "#141414";
 const PENCIL_STROKE_W = 30;
+/** Extra px past `#work` top (after `scroll-margin`) so the landing feels a bit lower on the page */
+const SCROLL_PAST_WORK_PX = 96;
 
 export function ScrollDownCue() {
   const filterUid = useId().replace(/:/g, "");
@@ -18,7 +20,11 @@ export function ScrollDownCue() {
     const el = document.getElementById("work");
     if (!el) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
+    const rect = el.getBoundingClientRect();
+    const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    const top = rect.top + window.scrollY - scrollMarginTop + SCROLL_PAST_WORK_PX;
+    window.scrollTo({ top, behavior });
   }
 
   return (
