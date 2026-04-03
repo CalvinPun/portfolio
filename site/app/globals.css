@@ -13,7 +13,8 @@
   /* Polaroid — keep in sync with PolaroidCard.tsx Image width/height */
   --photo-w: 330px;
   --photo-h: 385px;
-  --photo-border: 9px;
+  --polaroid-pad-x: 14px;
+  --polaroid-pad-top: 14px;
   /* NYU Violet (brand) */
   --nyu-violet: #57068c;
 }
@@ -184,7 +185,7 @@ a {
   transform: rotate(-1deg) scale(1.02);
 }
 
-/* Photo + corner tapes only (no rotation here — see .polaroid-tilt) */
+/* Photo frame + Polaroid card (no rotation here — see .polaroid-tilt) */
 .photo-frame {
   position: relative;
   isolation: isolate;
@@ -196,11 +197,48 @@ a {
   z-index: 0;
 }
 
-/* Caption: same width as image, follows bottom edge angle via .polaroid-tilt */
+/* Instant-film style: warm paper, thick bottom “chin”, single shadow */
+.polaroid-card {
+  overflow: visible;
+  padding: var(--polaroid-pad-top) var(--polaroid-pad-x) 0;
+  background: linear-gradient(
+    152deg,
+    #fdfcfa 0%,
+    #f4f2ed 42%,
+    #faf9f7 100%
+  );
+  border: 1px solid rgba(45, 35, 25, 0.09);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.04),
+    0 4px 6px rgba(40, 30, 20, 0.06),
+    0 12px 24px rgba(40, 30, 20, 0.1),
+    0 24px 48px rgba(40, 25, 15, 0.08);
+}
+
+.polaroid-card__photo-wrap {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  overflow: visible;
+}
+
+.polaroid-card__photo-wrap > .tape {
+  z-index: 5;
+}
+
+.polaroid-card__media {
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Caption sits in the wide white margin below the emulsion (classic Polaroid) */
 .photo-caption {
-  width: var(--photo-w);
+  width: 100%;
+  max-width: var(--photo-w);
   margin: 0;
-  padding-top: 0.625rem;
+  padding: 1.125rem 0.25rem 1.125rem;
   text-align: center;
   line-height: 1.35;
 }
@@ -210,8 +248,7 @@ a {
   width: var(--photo-w);
   height: var(--photo-h);
   object-fit: cover;
-  border: var(--photo-border) solid #fff;
-  box-shadow: 4px 6px 22px rgba(80, 50, 20, 0.18);
+  box-shadow: none;
 }
 
 .photo-img--placeholder {
@@ -265,36 +302,36 @@ a {
   transform: translate(-50%, -72%) rotate(1.25deg);
 }
 
-/* Corner tapes — scaled with larger polaroid */
+/* Polaroid — diagonal corner tapes (emulsion area; same palette as .tape) */
 .tape-corner {
   width: 70px;
   height: 25px;
 }
 
-.tape-corner-tl {
-  top: 29px;
-  left: -7px;
+.polaroid-card__photo-wrap > .tape.tape-corner-tl {
+  top: 15px;
+  left: -20px;
   transform: rotate(-44deg);
   transform-origin: left center;
 }
 
-.tape-corner-tr {
-  top: 29px;
-  right: -7px;
+.polaroid-card__photo-wrap > .tape.tape-corner-tr {
+  top: 15px;
+  right: -20px;
   transform: rotate(44deg);
   transform-origin: right center;
 }
 
-.tape-corner-bl {
-  bottom: 29px;
-  left: -7px;
+.polaroid-card__photo-wrap > .tape.tape-corner-bl {
+  bottom: -55px;
+  left: -20px;
   transform: rotate(44deg);
   transform-origin: left center;
 }
 
-.tape-corner-br {
-  bottom: 29px;
-  right: -7px;
+.polaroid-card__photo-wrap > .tape.tape-corner-br {
+  bottom: -55px;
+  right: -20px;
   transform: rotate(-44deg);
   transform-origin: right center;
 }
@@ -360,7 +397,7 @@ a {
 }
 
 .sticky-note-interactive--blue {
-  --sticky-rotate: -2deg;
+  --sticky-rotate: -11deg;
   box-shadow:
     0 1px 2px rgba(15, 40, 60, 0.06),
     0 8px 24px -6px rgba(15, 50, 80, 0.12);

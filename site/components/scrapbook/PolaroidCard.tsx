@@ -35,32 +35,33 @@ function PhotoPlaceholder({ label }: { label: string }) {
 
 export function PolaroidCard({ caption, photoSrc, photoPlaceholderText }: PolaroidCardProps) {
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center -translate-y-6 sm:-translate-y-7">
       <div className="polaroid-tilt">
-        <div className="photo-frame">
-          {/* Media first; tapes after so they paint above Next/Image wrapper */}
-          <div className="photo-frame__media">
-            {photoSrc ? (
-              <Image
-                src={photoSrc}
-                alt="Portrait"
-                width={330}
-                height={385}
-                className="photo-img"
-                priority
-              />
-            ) : (
-              <PhotoPlaceholder label={photoPlaceholderText} />
-            )}
+        <div className="photo-frame polaroid-card">
+          <div className="polaroid-card__photo-wrap">
+            <div className="photo-frame__media polaroid-card__media">
+              {photoSrc ? (
+                <Image
+                  src={photoSrc}
+                  alt="Portrait"
+                  width={330}
+                  height={385}
+                  className="photo-img"
+                  priority
+                />
+              ) : (
+                <PhotoPlaceholder label={photoPlaceholderText} />
+              )}
+            </div>
+            <div className="tape tape-corner tape-corner-tl" aria-hidden />
+            <div className="tape tape-corner tape-corner-tr" aria-hidden />
+            <div className="tape tape-corner tape-corner-bl" aria-hidden />
+            <div className="tape tape-corner tape-corner-br" aria-hidden />
           </div>
-          <div className="tape tape-corner tape-corner-tl" aria-hidden />
-          <div className="tape tape-corner tape-corner-tr" aria-hidden />
-          <div className="tape tape-corner tape-corner-bl" aria-hidden />
-          <div className="tape tape-corner tape-corner-br" aria-hidden />
+          <p className="photo-caption font-hand text-3xl leading-snug text-stone-800 sm:text-[2rem]">
+            {caption}
+          </p>
         </div>
-        <p className="photo-caption font-hand text-3xl leading-snug text-stone-800 sm:text-[2rem]">
-          {caption}
-        </p>
       </div>
     </div>
   );
