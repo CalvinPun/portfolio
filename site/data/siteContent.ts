@@ -31,7 +31,7 @@ export const siteContent = {
       "Outside of programming, I love gaming, listening to music, fashion, leaving nyc, and cats (if you couldn't tell already). If you'd like to know more about me, please feel free to reach out! I'm always open to new opportunities and meeting new people and friends along the way :).",
       "=======================================",
       "// gratitude",
-      "Thanks for reading!",
+      "exit(0); (thanks for reading!)",
     ],
   },
 } as const;
