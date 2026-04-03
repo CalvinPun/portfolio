@@ -15,10 +15,10 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="flex min-h-[100dvh] scroll-mt-0 flex-col justify-center px-2 py-10 sm:px-4 sm:py-16"
+      className="flex min-h-[100dvh] scroll-mt-0 flex-col justify-center overflow-x-hidden px-2 py-10 sm:px-4 sm:py-16"
       aria-label="About"
     >
-      <div className="relative mx-auto w-full max-w-[min(100%,80rem)]">
+      <div className="relative mx-auto w-full min-w-0 max-w-[min(100%,80rem)]">
         <Image
           src="/manila-folder.svg"
           alt=""
@@ -28,7 +28,7 @@ export function AboutSection() {
           sizes="(max-width: 768px) 100vw, 80rem"
           priority={false}
         />
-        <div className="absolute left-[49%] top-[7.25%] z-10 w-[41%] max-h-[86%] sm:left-[49.25%] sm:top-[6.75%] sm:w-[40.5%]">
+        <div className="absolute left-[49%] top-[7.25%] z-10 w-[41%] max-h-none min-w-0 overflow-x-hidden sm:left-[49.25%] sm:top-[6.75%] sm:w-[40.5%]">
           <AboutNotebookOverlay
             notebookTitle={notebookTitle}
             notebookLines={notebookLines}

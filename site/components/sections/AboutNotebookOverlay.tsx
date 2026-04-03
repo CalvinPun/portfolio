@@ -55,7 +55,7 @@ export function AboutNotebookOverlay({
   return (
     <div
       ref={measureRef}
-      className="relative w-full [container-type:inline-size]"
+      className="relative w-full min-w-0 max-w-full [container-type:inline-size]"
     >
       <Image
         src="/notebook-paper.svg"
@@ -67,7 +67,7 @@ export function AboutNotebookOverlay({
         priority={false}
       />
       <div
-        className="absolute inset-0 flex flex-col pl-[13%] pr-[4%] pt-[5.85%] sm:pl-[12%] sm:pt-[5.1%]"
+        className="absolute inset-0 flex min-w-0 max-w-full flex-col overflow-x-hidden pl-[13%] pr-[4%] pt-[5.85%] sm:pl-[12%] sm:pt-[5.1%]"
         style={{
           gap: 0,
           transform:
@@ -75,7 +75,7 @@ export function AboutNotebookOverlay({
         }}
       >
         <h2
-          className="font-hand m-0 font-bold text-stone-900"
+          className="font-hand m-0 min-w-0 max-w-full break-words font-bold text-stone-900"
           style={{
             fontSize: "clamp(1.05rem, 0.78rem + 1.35vw, 2.35rem)",
             lineHeight: titleLineHeight,
@@ -83,7 +83,7 @@ export function AboutNotebookOverlay({
         >
           {notebookTitle}
         </h2>
-        <div className="flex flex-col" style={{ gap: 0 }}>
+        <div className="flex min-w-0 max-w-full flex-col" style={{ gap: 0 }}>
           {notebookLines.map((line, i) => {
             const n = notebookLines.length;
             const tail2 = i === n - 2;
@@ -111,7 +111,7 @@ export function AboutNotebookOverlay({
             return (
               <p
                 key={`${i}-${line}`}
-                className="font-hand m-0 text-zinc-700"
+                className={`font-hand m-0 min-w-0 max-w-full text-zinc-700 ${isRuleBar ? "break-all" : "break-words"}`}
                 style={{
                   fontSize: "clamp(0.9rem, 0.72rem + 0.95vw, 1.55rem)",
                   lineHeight: bodyLineHeight,
