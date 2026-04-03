@@ -21,7 +21,16 @@ export const siteContent = {
     photoSrc: "/me.jpg",
   },
   about: {
-    heading: "About me",
-    body: "Placeholder copy — add your story, interests, and what you’re building. This section sits after the hero; the arrow scrolls here.",
+    notebookTitle: "about... me! 4/3/26",
+    notebookLines: [
+      "// goals",
+      "I’m a developer who builds things that are functional, visually clean, and feel good to use. More specifically, I love building apps that have an actual impact on lives and help the people around me.",
+      "========================================",
+      "// personal life",
+      "Outside of computer science, I love gaming, listening to music, fashion, leaving nyc, and cats (if you couldn't tell already). If you'd like to know more about me, please feel free to reach out! I'm always open to new opportunities and meeting new people and friends along the way :).",
+      "========================================",
+      "// gratitude",
+      "Thanks for reading!",
+    ],
   },
 } as const;

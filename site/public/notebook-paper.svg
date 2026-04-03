@@ -1,5 +1,18 @@
 <svg width="1920" height="2211" viewBox="0 0 1920 2211" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<clipPath id="clip0_2_27">
+<rect width="1920" height="2211" fill="white"/>
+</clipPath>
+<!-- White = keep art; black circles = transparent “punched” holes (manila shows through below) -->
+<mask id="notebookHoles" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="2211">
+<rect width="1920" height="2211" fill="white"/>
+<circle cx="102" cy="300" r="30" fill="black"/>
+<circle cx="102" cy="1105" r="30" fill="black"/>
+<circle cx="102" cy="1960" r="30" fill="black"/>
+</mask>
+</defs>
 <g clip-path="url(#clip0_2_27)">
+<g mask="url(#notebookHoles)">
 <rect width="1920" height="2211" fill="white"/>
 <line y1="203.5" x2="1920" y2="203.5" stroke="#E8DFC8" stroke-opacity="0.87" stroke-width="3"/>
 <line y1="317.5" x2="1920" y2="317.5" stroke="#E8DFC8" stroke-opacity="0.87" stroke-width="3"/>
@@ -31,9 +44,5 @@
 <line y1="1988.5" x2="1920" y2="1988.5" stroke="#E8DFC8" stroke-opacity="0.87" stroke-width="3"/>
 <line y1="2113.06" x2="1920" y2="2113.06" stroke="#E8DFC8" stroke-opacity="0.87" stroke-width="3"/>
 </g>
-<defs>
-<clipPath id="clip0_2_27">
-<rect width="1920" height="2211" fill="white"/>
-</clipPath>
-</defs>
+</g>
 </svg>
