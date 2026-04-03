@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const NOTEBOOK_W = 1920;
 const NOTEBOOK_H = 2211;
@@ -26,6 +26,17 @@ export function AboutNotebookOverlay({
 }: AboutNotebookOverlayProps) {
   const measureRef = useRef<HTMLDivElement>(null);
   const [ruleLinePx, setRuleLinePx] = useState<number | null>(null);
+  const [titleDate, setTitleDate] = useState("");
+
+  useEffect(() => {
+    setTitleDate(
+      new Date().toLocaleDateString("en-US", {
+        month: "numeric",
+        day: "numeric",
+        year: "2-digit",
+      })
+    );
+  }, []);
 
   const measure = useCallback(() => {
     const el = measureRef.current;
@@ -82,6 +93,7 @@ export function AboutNotebookOverlay({
           }}
         >
           {notebookTitle}
+          {titleDate ? ` ${titleDate}` : ""}
         </h2>
         <div className="flex min-w-0 max-w-full flex-col" style={{ gap: 0 }}>
           {notebookLines.map((line, i) => {
@@ -90,6 +102,7 @@ export function AboutNotebookOverlay({
             const prevTrim = (notebookLines[i - 1] ?? "").trim();
             const nextTrim = (notebookLines[i + 1] ?? "").trim();
             const trim = line.trim();
+            const isCommentLine = trim.startsWith("//");
             const isRuleBar = /^=+$/.test(trim);
             const isPersonalHeader = trim.startsWith("// personal life");
             /** `====` row directly before `// personal life` (not the gratitude divider). */
@@ -111,7 +124,14 @@ export function AboutNotebookOverlay({
             return (
               <p
                 key={`${i}-${line}`}
-                className={`font-hand m-0 min-w-0 max-w-full text-zinc-700 ${isRuleBar ? "break-all" : "break-words"}`}
+                aria-hidden={isRuleBar ? true : undefined}
+                className={[
+                  "font-hand m-0 min-w-0 max-w-full",
+                  isCommentLine
+                    ? "font-semibold text-sky-900"
+                    : "text-zinc-700",
+                  isRuleBar ? "invisible select-none break-all" : "break-words",
+                ].join(" ")}
                 style={{
                   fontSize: "clamp(0.9rem, 0.72rem + 0.95vw, 1.55rem)",
                   lineHeight: bodyLineHeight,
