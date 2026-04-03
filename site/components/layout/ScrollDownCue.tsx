@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 /** Paths mirror `public/down-arrow.svg` — edit the SVG, then paste updated `d` values here. */
 
@@ -9,30 +9,62 @@ const ARROW_VIEW_H = 1179;
 /** Near-black graphite; not pure #000 so it reads like pencil on paper */
 const PENCIL_STROKE = "#141414";
 const PENCIL_STROKE_W = 30;
-/** Extra px past `#work` top (after `scroll-margin`) so the landing feels a bit lower on the page */
-const SCROLL_PAST_WORK_PX = 96;
+/** Extra px past `#about` top (after `scroll-margin`) */
+const SCROLL_PAST_ABOUT_PX = 24;
 
 export function ScrollDownCue() {
   const filterUid = useId().replace(/:/g, "");
   const filterId = `arrow-pencil-${filterUid}`;
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [inView, setInView] = useState(true);
+  const [drawKey, setDrawKey] = useState(0);
+  const prevVisibleRef = useRef<boolean | null>(null);
 
-  function scrollToWork() {
-    const el = document.getElementById("work");
+  useEffect(() => {
+    const el = buttonRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting;
+        setInView(visible);
+        if (prevVisibleRef.current === false && visible) {
+          setDrawKey((k) => k + 1);
+        }
+        prevVisibleRef.current = visible;
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  function scrollToAbout() {
+    const el = document.getElementById("about");
     if (!el) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
     const rect = el.getBoundingClientRect();
     const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
-    const top = rect.top + window.scrollY - scrollMarginTop + SCROLL_PAST_WORK_PX;
+    const top = rect.top + window.scrollY - scrollMarginTop + SCROLL_PAST_ABOUT_PX;
     window.scrollTo({ top, behavior });
   }
 
   return (
     <button
+      ref={buttonRef}
       type="button"
-      onClick={scrollToWork}
-      className="group inline-flex shrink-0 flex-col items-center border-0 bg-transparent pb-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-500"
-      aria-label="Scroll to work section"
+      onClick={scrollToAbout}
+      className={[
+        "group inline-flex shrink-0 flex-col items-center border-0 bg-transparent pb-1",
+        "transition-opacity duration-200 motion-reduce:transition-none",
+        inView
+          ? "opacity-100 hover:opacity-80"
+          : "pointer-events-none opacity-0",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-500",
+      ].join(" ")}
+      aria-label="Scroll to about section"
+      aria-hidden={!inView}
+      tabIndex={inView ? undefined : -1}
     >
       <span
         className="block h-[9rem] shrink-0 sm:h-[11rem]"
@@ -74,6 +106,7 @@ export function ScrollDownCue() {
             </filter>
           </defs>
           <g filter={`url(#${filterId})`}>
+            <g key={drawKey}>
             <path
               className="draw-arrow-path--shaft"
               pathLength="1"
@@ -94,6 +127,7 @@ export function ScrollDownCue() {
               strokeLinejoin="round"
               strokeOpacity={0.94}
             />
+            </g>
           </g>
         </svg>
       </span>

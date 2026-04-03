@@ -20,4 +20,8 @@ export const siteContent = {
     /** Set to e.g. "/portrait.jpg" when you add a photo to `public/` */
     photoSrc: "/me.jpg",
   },
+  about: {
+    heading: "About me",
+    body: "Placeholder copy — add your story, interests, and what you’re building. This section sits after the hero; the arrow scrolls here.",
+  },
 } as const;

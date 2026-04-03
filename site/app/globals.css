@@ -24,15 +24,16 @@ html {
 }
 
 body {
+  position: relative;
   min-height: 100%;
   background-color: #faf0e6;
   color: var(--foreground);
 }
 
-/* Lined paper layer — fades in on load without affecting text */
+/* Lined paper layer — scrolls with the page (not fixed to the viewport) */
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
