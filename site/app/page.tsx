@@ -8,13 +8,13 @@ export default function Home() {
       {/* Hero: arrow under content on small screens; pinned to bottom from lg up */}
       <section
         id="hero"
-        className="relative min-h-[100dvh] scroll-mt-0"
+        className="relative scroll-mt-0 lg:min-h-[100dvh]"
         aria-label="Introduction"
       >
-        <div className="flex min-h-[100dvh] flex-col justify-start px-4 py-12 sm:px-6 sm:py-16 lg:justify-center">
+        <div className="flex flex-col justify-start px-4 pb-0 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:min-h-[100dvh] lg:justify-center">
           <HeroSection />
           {/* Narrow viewports: arrow follows the hero in the document (under post-its), not the screen bottom */}
-          <div className="pointer-events-none mt-8 flex justify-center pb-[max(1rem,env(safe-area-inset-bottom))] pt-2 sm:mt-10 sm:pb-6 lg:hidden">
+          <div className="pointer-events-none mt-2 flex justify-center pb-0 sm:mt-10 sm:pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden">
             <span className="pointer-events-auto">
               <ScrollDownCue />
             </span>
@@ -29,8 +29,8 @@ export default function Home() {
 
       <AboutSection />
 
-      <section id="work" className="min-h-[80vh] scroll-mt-20" aria-label="Work" />
-      <section id="contact" className="min-h-[50vh] scroll-mt-20" aria-label="Contact" />
+      <section id="work" className="scroll-mt-20 md:min-h-[80vh]" aria-label="Work" />
+      <section id="contact" className="scroll-mt-20 md:min-h-[50vh]" aria-label="Contact" />
     </main>
   );
 }

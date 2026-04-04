@@ -13,13 +13,13 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="flex min-h-[100dvh] scroll-mt-0 flex-col justify-center overflow-x-hidden px-2 py-10 sm:px-4 sm:py-16"
+      className="flex scroll-mt-0 flex-col justify-center overflow-x-hidden px-2 pb-10 pt-0 sm:px-4 sm:py-16 md:min-h-[100dvh]"
       aria-label="About"
     >
       <div
         className="relative mx-auto w-full min-w-0"
         style={{
-          maxWidth: `min(100%, 88vw, calc((100dvh - 8rem) * ${MANILA_RATIO.toFixed(3)}))`,
+          maxWidth: `min(100%, var(--folder-vw-cap), calc((100dvh - 8rem) * ${MANILA_RATIO.toFixed(3)}))`,
         }}
       >
         <Image

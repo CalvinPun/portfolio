@@ -19,6 +19,14 @@
   --draw-arrow-start-delay: 1.15s;
   --draw-arrow-shaft-dur: 2.35s;
   --draw-arrow-head-dur: 0.8s;
+  /* Folder section — full width on mobile, constrained on desktop */
+  --folder-vw-cap: 100%;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --folder-vw-cap: 88vw;
+  }
 }
 
 html {

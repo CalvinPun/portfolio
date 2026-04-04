@@ -67,7 +67,7 @@ export function ScrollDownCue() {
       tabIndex={inView ? undefined : -1}
     >
       <span
-        className="block h-[9rem] shrink-0 sm:h-[11rem]"
+        className="block h-[6rem] shrink-0 sm:h-[9rem] lg:h-[11rem]"
         style={{ aspectRatio: `${ARROW_VIEW_W} / ${ARROW_VIEW_H}` }}
         aria-hidden
       >

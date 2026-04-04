@@ -16,7 +16,7 @@ export function ScrapbookHero() {
         style={{ zoom: "clamp(1, calc(100vw / 1440px), 1.5)" }}
       >
         <div className="relative">
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
+          <div className="grid grid-cols-1 items-start gap-6 sm:gap-12 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
             <div className="hero-pop hero-pop-delay-1 flex order-1 justify-center lg:order-none lg:col-span-4 lg:row-start-1">
               <PolaroidCard
                 caption={polaroidCaption}
