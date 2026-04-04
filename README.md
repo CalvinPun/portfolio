@@ -17,7 +17,7 @@ personal portfolio site!
 | Fonts     | [next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) (e.g. Caveat, DM Sans) |
 
 
-All application code lives under `**site/`**; the repo root keeps this README and `.gitignore` only.
+the repository root contains the Next.js app folder at `**site/`** plus the usual repo metadata files.
 
 ## prereqs
 
@@ -64,4 +64,3 @@ Run these from `**site/**`:
 
 - **Copy and social URLs:** edit `site/data/siteContent.ts`
 - **Images:** add files under `site/public/` and reference paths like `/me.jpg` in `siteContent` or components
-
