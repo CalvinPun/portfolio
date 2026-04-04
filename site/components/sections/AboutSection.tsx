@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { AboutBucketList } from "@/components/sections/AboutBucketList";
@@ -13,15 +16,37 @@ const MANILA_RATIO = MANILA_W / MANILA_H;
 
 export function AboutSection() {
   const { notebookTitle, notebookLines, pocketPolaroid, pocketPolaroid2, pocketScrap, bucketList } = siteContent.about;
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(Boolean(entry?.isIntersecting));
+      },
+      {
+        threshold: 0.28,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="about"
       className="flex scroll-mt-0 flex-col justify-center overflow-x-clip overflow-y-visible px-1 pb-10 pt-0 sm:px-2 sm:py-12 md:min-h-[100dvh]"
       aria-label="About"
     >
       <div
-        className="relative mx-auto w-full min-w-0"
+        className={`about-folder-stage relative mx-auto w-full min-w-0${isVisible ? " is-visible" : ""}`}
         style={{
           maxWidth: `min(100%, var(--folder-vw-cap), 112rem, calc((100dvh - 4rem) * ${MANILA_RATIO.toFixed(3)}))`,
         }}
@@ -31,13 +56,13 @@ export function AboutSection() {
           alt=""
           width={MANILA_W}
           height={MANILA_H}
-          className="relative z-0 block h-auto w-full select-none"
+          className="about-folder-base relative z-0 block h-auto w-full select-none"
           sizes="(max-width: 768px) 100vw, 88vw"
           loading="eager"
           priority
         />
         {/* Left pocket — left of the folder crease (~49%); notebook sits on the right */}
-        <div className="pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]">
+        <div className="about-folder-pocket pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]">
           <div
             className="relative w-full max-w-[11rem] min-w-0 origin-top-left overflow-visible [container-type:inline-size] sm:max-w-[14rem] md:max-w-[31rem] lg:scale-[1.06] xl:scale-[1.12] 2xl:scale-[1.18]"
             style={{ aspectRatio: "0.78 / 1" }}
@@ -68,7 +93,7 @@ export function AboutSection() {
             </div>
           </div>
         </div>
-        <div className="absolute left-[49%] top-[7.25%] z-10 w-[41%] min-w-0 overflow-hidden sm:left-[49.25%] sm:top-[6.75%] sm:w-[40.5%]">
+        <div className="about-folder-notebook absolute left-[49%] top-[7.25%] z-10 w-[41%] min-w-0 overflow-hidden sm:left-[49.25%] sm:top-[6.75%] sm:w-[40.5%]">
           <AboutNotebookOverlay
             notebookTitle={notebookTitle}
             notebookLines={notebookLines}

@@ -401,6 +401,76 @@ a {
   }
 }
 
+/* About folder reveal — fake a folder opening with a flap-like base motion and staggered inserts */
+@keyframes about-folder-base-open {
+  from {
+    opacity: 0;
+    transform: perspective(1600px) rotateX(14deg) scaleY(0.97) translateY(24px);
+    transform-origin: center bottom;
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1600px) rotateX(0deg) scaleY(1) translateY(0);
+    transform-origin: center bottom;
+  }
+}
+
+@keyframes about-folder-pocket-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.94) rotate(-1.2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes about-folder-notebook-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(26px) translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+.about-folder-base {
+  opacity: 0;
+}
+
+.about-folder-pocket {
+  opacity: 0;
+}
+
+.about-folder-notebook {
+  opacity: 0;
+}
+
+.about-folder-stage.is-visible .about-folder-base {
+  animation: about-folder-base-open 0.9s cubic-bezier(0.2, 0.9, 0.24, 1) 0.05s forwards;
+}
+
+.about-folder-stage.is-visible .about-folder-pocket {
+  animation: about-folder-pocket-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
+}
+
+.about-folder-stage.is-visible .about-folder-notebook {
+  animation: about-folder-notebook-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-folder-base,
+  .about-folder-pocket,
+  .about-folder-notebook {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Subtle folded corner on sticky notes */
 .note-curl::after {
   content: "";
