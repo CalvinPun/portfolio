@@ -6,6 +6,7 @@
 
 :root {
   --foreground: #1f1f1f;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-hand: var(--font-caveat), cursive;
   /* Polaroid — keep in sync with PolaroidCard.tsx Image width/height */
   --photo-w: 330px;

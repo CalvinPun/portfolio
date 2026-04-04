@@ -1,10 +1,15 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type ContainerProps = {
   children: ReactNode;
   className?: string;
+  style?: CSSProperties;
 };
 
-export function Container({ children, className = "" }: ContainerProps) {
-  return <div className={`mx-auto max-w-5xl ${className}`.trim()}>{children}</div>;
+export function Container({ children, className = "", style }: ContainerProps) {
+  return (
+    <div className={`mx-auto ${className}`.trim()} style={style}>
+      {children}
+    </div>
+  );
 }
