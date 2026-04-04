@@ -119,7 +119,7 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
   if (data === null) {
     if (embedded) {
       return (
-        <div className="ml-3.5 w-[min(100%,15rem)] min-w-0 sm:ml-5" aria-hidden>
+        <div className="w-full min-w-0" aria-hidden>
           <EmbeddedPostItFrame>
             <div className="h-24 animate-pulse rounded-sm bg-emerald-900/10" />
           </EmbeddedPostItFrame>
@@ -183,7 +183,7 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
           href={idleHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-3.5 block w-[min(100%,15rem)] min-w-0 outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6] sm:ml-5"
+          className="block w-full min-w-0 outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6]"
           aria-label={idleAria}
         >
           {idleBody}
@@ -264,7 +264,7 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Currently playing on Spotify — open in Spotify"
-          className="ml-3.5 block w-[min(100%,15rem)] min-w-0 outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6] sm:ml-5"
+          className="block w-full min-w-0 outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6]"
         >
           {body}
         </a>
@@ -272,7 +272,7 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
     }
     return (
       <div
-        className="ml-3.5 w-[min(100%,15rem)] min-w-0 sm:ml-5"
+        className="w-full min-w-0"
         role="region"
         aria-label="Currently playing on Spotify"
       >

@@ -38,7 +38,7 @@ export const siteContent = {
     pocketScrap:
       "ps — always happy to share song recs!",
     bucketList: {
-      title: "bucket list...",
+      title: "things i wanna do...",
       items: [
         { text: "attend a NIKI concert" },
         { text: "adopt a cat" },

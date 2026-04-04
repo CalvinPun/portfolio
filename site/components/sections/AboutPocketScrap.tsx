@@ -11,7 +11,7 @@ export function AboutPocketScrap({ text }: { text: string }) {
   } as const;
 
   return (
-    <div className="relative z-0 -mt-34 w-[min(100%,12rem)] min-w-0 overflow-visible font-hand sm:-mt-44">
+    <div className="relative z-0 w-full min-w-0 overflow-visible font-hand">
       <div className="relative rotate-[2.75deg]">
         <div
           className="tape tape-sticky-top pointer-events-none absolute left-[42%] top-0 z-10 scale-75 opacity-90"

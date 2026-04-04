@@ -23,7 +23,7 @@ export function AboutSection() {
       <div
         className="relative mx-auto w-full min-w-0"
         style={{
-          maxWidth: `min(100%, var(--folder-vw-cap), calc((100dvh - 3rem) * ${MANILA_RATIO.toFixed(3)}))`,
+          maxWidth: `min(100%, var(--folder-vw-cap), 112rem, calc((100dvh - 4rem) * ${MANILA_RATIO.toFixed(3)}))`,
         }}
       >
         <Image
@@ -37,12 +37,15 @@ export function AboutSection() {
           priority
         />
         {/* Left pocket — left of the folder crease (~49%); notebook sits on the right */}
-        <div className="pointer-events-auto absolute left-[6%] right-[53%] top-[7.5%] z-20 flex min-w-0 flex-col items-start gap-6 overflow-visible [container-type:inline-size] sm:left-[7%] sm:right-[53%] sm:top-[8%] sm:gap-8">
-          <div className="flex w-full min-w-0 flex-row flex-nowrap items-start justify-start gap-3 overflow-visible sm:gap-4 [container-type:inline-size]">
-            <div className="w-[15rem] min-w-0 shrink-0">
+        <div className="pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]">
+          <div
+            className="relative w-full max-w-[11rem] min-w-0 origin-top-left overflow-visible [container-type:inline-size] sm:max-w-[14rem] md:max-w-[31rem] lg:scale-[1.06] xl:scale-[1.12] 2xl:scale-[1.18]"
+            style={{ aspectRatio: "0.78 / 1" }}
+          >
+            <div className="absolute left-[5%] top-[0%] w-[60%] min-w-0 md:w-[53%]">
               <CurrentlyPlayingSpotify variant="embedded" />
             </div>
-            <div className="w-52 shrink-0 translate-x-4 sm:w-60 sm:translate-x-6">
+            <div className="absolute right-[-3%] top-[0%] w-[44%] min-w-0">
               <AboutPocketPolaroid
                 src={pocketPolaroid.src}
                 alt={pocketPolaroid.alt}
@@ -50,17 +53,17 @@ export function AboutSection() {
                 rotation={-2}
               />
             </div>
-          </div>
-          <AboutPocketScrap text={pocketScrap} />
-          <div className="flex w-full min-w-0 flex-row flex-nowrap items-start justify-start gap-3 overflow-visible sm:gap-4">
-            <div className="-mt-4 w-52 shrink-0 sm:-mt-6 sm:w-60 [container-type:inline-size]">
+            <div className="absolute left-[9%] top-[27%] w-[46%] min-w-0">
+              <AboutPocketScrap text={pocketScrap} />
+            </div>
+            <div className="absolute left-[3%] top-[44%] w-[44%] min-w-0 [container-type:inline-size]">
               <AboutPocketPolaroid
                 src={pocketPolaroid2.src}
                 alt={pocketPolaroid2.alt}
                 caption={pocketPolaroid2.caption}
               />
             </div>
-            <div className="shrink-0 translate-x-2 translate-y-8 sm:translate-x-4 sm:translate-y-12">
+            <div className="absolute right-[7%] top-[58%] w-[40%] min-w-0 md:top-[54%]">
               <AboutBucketList title={bucketList.title} items={bucketList.items} />
             </div>
           </div>
