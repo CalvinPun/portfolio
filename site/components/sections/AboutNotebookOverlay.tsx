@@ -3,17 +3,14 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const NOTEBOOK_W = 1920;
+import {
+  ABOUT_NOTEBOOK_ARTBOARD_W as NOTEBOOK_W,
+  ABOUT_NOTEBOOK_BODY_FONT_CQW as BODY_FONT_CQW,
+  ABOUT_NOTEBOOK_LINE_CQW as RULE_CQW,
+  ABOUT_NOTEBOOK_TITLE_FONT_CQW as TITLE_FONT_CQW,
+} from "@/lib/aboutNotebookTypeScale";
+
 const NOTEBOOK_H = 2211;
-
-/**
- * SVG ruled-line spacing (114 px at 1920 px wide) expressed as a
- * percentage of the container width so we can use pure `cqw` units.
- */
-const RULE_CQW = (114 / NOTEBOOK_W) * 100; // ≈ 5.9375
-
-const BODY_FONT_CQW = RULE_CQW * 0.76;
-const TITLE_FONT_CQW = RULE_CQW * 1.18;
 
 type Props = {
   notebookTitle: string;

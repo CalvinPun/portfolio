@@ -2,7 +2,48 @@
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 
+import {
+  ABOUT_NOTEBOOK_LINE_CQW,
+  ABOUT_STICKY_ART_CQW,
+  ABOUT_STICKY_CAPTION_FONT_CQW,
+  ABOUT_STICKY_LABEL_FONT_CQW,
+  ABOUT_STICKY_PRIMARY_FONT_CQW,
+  ABOUT_STICKY_SECONDARY_FONT_CQW,
+} from "@/lib/aboutNotebookTypeScale";
 import type { NowPlayingResult } from "@/lib/spotifyNowPlaying";
+
+const stickyLineCompact = ABOUT_NOTEBOOK_LINE_CQW * 0.92;
+
+const stickyLabelStyle = {
+  fontSize: `${ABOUT_STICKY_LABEL_FONT_CQW}cqw`,
+  lineHeight: `${stickyLineCompact}cqw`,
+} as const;
+
+const stickyPrimaryStyle = {
+  fontSize: `${ABOUT_STICKY_PRIMARY_FONT_CQW}cqw`,
+  lineHeight: `${ABOUT_NOTEBOOK_LINE_CQW * 0.95}cqw`,
+} as const;
+
+const stickySecondaryStyle = {
+  fontSize: `${ABOUT_STICKY_SECONDARY_FONT_CQW}cqw`,
+  lineHeight: `${stickyLineCompact}cqw`,
+} as const;
+
+const stickyCaptionStyle = {
+  fontSize: `${ABOUT_STICKY_CAPTION_FONT_CQW}cqw`,
+  lineHeight: `${stickyLineCompact}cqw`,
+} as const;
+
+const stickyArtBoxStyle = {
+  width: `${ABOUT_STICKY_ART_CQW}cqw`,
+  height: `${ABOUT_STICKY_ART_CQW}cqw`,
+  minWidth: "2.25rem",
+  minHeight: "2.25rem",
+} as const;
+
+const stickyProgressBarStyle = {
+  height: `clamp(3px, ${ABOUT_NOTEBOOK_LINE_CQW * 0.14}cqw, 5px)`,
+} as const;
 
 function formatTrackTime(ms: number) {
   const s = Math.floor(Math.max(0, ms) / 1000);
@@ -13,6 +54,14 @@ function formatTrackTime(ms: number) {
 
 const POLL_MS = 4000;
 const TICK_MS = 250;
+
+/** Fallback when the API doesn’t return `idleFavorite` (e.g. no token). Same track as default on the server. */
+const IDLE_FAVORITE_FALLBACK = {
+  header: "current favorite song",
+  title: "love.",
+  artist: "wave to earth",
+  spotifyUrl: "https://open.spotify.com/track/5mtTAScDytxMMqZj14NmlN",
+} as const;
 
 type PlayingPayload = Extract<NowPlayingResult, { configured: true; playing: true }>;
 
@@ -67,9 +116,11 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
   if (data === null) {
     if (embedded) {
       return (
-        <EmbeddedPostItFrame aria-hidden>
-          <div className="h-24 animate-pulse rounded-sm bg-emerald-900/10" />
-        </EmbeddedPostItFrame>
+        <div className="ml-3.5 w-[min(100%,15rem)] min-w-0 sm:ml-5" aria-hidden>
+          <EmbeddedPostItFrame>
+            <div className="h-24 animate-pulse rounded-sm bg-emerald-900/10" />
+          </EmbeddedPostItFrame>
+        </div>
       );
     }
     return (
@@ -85,11 +136,55 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
 
   if (!data.playing) {
     if (embedded) {
-      return (
-        <EmbeddedPostItFrame aria-label="Spotify">
-          <p className="text-[1.0625rem] lowercase leading-snug text-stone-800">currently listening...</p>
-          <p className="mt-3 text-center text-[0.9375rem] leading-snug text-stone-600">nothing playing right now</p>
+      const fav = data.idleFavorite;
+      const idleTitle = fav?.title ?? IDLE_FAVORITE_FALLBACK.title;
+      const idleArtist = fav?.artist ?? IDLE_FAVORITE_FALLBACK.artist;
+      const idleHref = fav?.url ?? IDLE_FAVORITE_FALLBACK.spotifyUrl;
+      const idleCover = fav?.albumImageUrl ?? null;
+      const idleAria = `Open ${idleTitle} by ${idleArtist} on Spotify`;
+      const idleBody = (
+        <EmbeddedPostItFrame aria-label="Current favorite song">
+          <p className="lowercase text-stone-800" style={stickyLabelStyle}>
+            {IDLE_FAVORITE_FALLBACK.header}
+          </p>
+          <div className="mt-[0.35em] flex gap-[0.35em]">
+            <div
+              className="relative shrink-0 overflow-hidden rounded-sm border-2 border-white bg-[#e8e4dc] shadow-sm"
+              style={stickyArtBoxStyle}
+            >
+              {idleCover ? (
+                // eslint-disable-next-line @next/next/no-img-element -- remote Spotify CDN hostnames vary
+                <img src={idleCover} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <div
+                  className="flex h-full w-full items-center justify-center text-stone-500"
+                  style={{ fontSize: `${ABOUT_STICKY_PRIMARY_FONT_CQW * 0.95}cqw` }}
+                >
+                  ♪
+                </div>
+              )}
+            </div>
+            <div className="min-w-0 flex-1 pt-px">
+              <p className="truncate font-semibold text-stone-900" style={stickyPrimaryStyle}>
+                {idleTitle}
+              </p>
+              <p className="mt-0.5 truncate text-stone-700" style={stickySecondaryStyle}>
+                {idleArtist}
+              </p>
+            </div>
+          </div>
         </EmbeddedPostItFrame>
+      );
+      return (
+        <a
+          href={idleHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-3.5 block w-[min(100%,15rem)] min-w-0 outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6] sm:ml-5"
+          aria-label={idleAria}
+        >
+          {idleBody}
+        </a>
       );
     }
     return (
@@ -109,26 +204,49 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
   if (embedded) {
     const body = (
       <EmbeddedPostItFrame>
-        <p className="text-[1.0625rem] lowercase leading-snug text-stone-800">currently listening...</p>
-        <div className="mt-2 flex gap-2.5">
-          <div className="relative h-[3.25rem] w-[3.25rem] shrink-0 overflow-hidden rounded-sm border-2 border-white bg-[#e8e4dc] shadow-sm">
+        <p className="lowercase text-stone-800" style={stickyLabelStyle}>
+          currently listening to...
+        </p>
+        <div className="mt-[0.35em] flex gap-[0.35em]">
+          <div
+            className="relative shrink-0 overflow-hidden rounded-sm border-2 border-white bg-[#e8e4dc] shadow-sm"
+            style={stickyArtBoxStyle}
+          >
             {albumImageUrl ? (
               // eslint-disable-next-line @next/next/no-img-element -- remote Spotify CDN hostnames vary
               <img src={albumImageUrl} alt="" className="h-full w-full object-cover" />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-lg text-stone-500">♪</div>
+              <div
+                className="flex h-full w-full items-center justify-center text-stone-500"
+                style={{ fontSize: `${ABOUT_STICKY_PRIMARY_FONT_CQW * 0.95}cqw` }}
+              >
+                ♪
+              </div>
             )}
           </div>
-          <div className="min-w-0 flex-1 pt-0.5">
-            <p className="truncate text-[1.05rem] font-semibold leading-tight text-stone-900">{title}</p>
-            <p className="mt-0.5 truncate text-[0.9375rem] leading-snug text-stone-700">{artist}</p>
+          <div className="min-w-0 flex-1 pt-px">
+            <p className="truncate font-semibold text-stone-900" style={stickyPrimaryStyle}>
+              {title}
+            </p>
+            <p className="mt-0.5 truncate text-stone-700" style={stickySecondaryStyle}>
+              {artist}
+            </p>
           </div>
         </div>
-        <div className="mt-3">
-          <div className="h-1 w-full overflow-hidden rounded-full bg-[#e5d8c4]">
-            <div className="h-full rounded-full bg-[#6b4f36]" style={{ width: `${pct}%` }} />
+        <div className="mt-[0.45em]">
+          <div
+            className="w-full overflow-hidden rounded-full bg-emerald-900/15"
+            style={stickyProgressBarStyle}
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-700 ring-1 ring-inset ring-white/30"
+              style={{ width: `${pct}%` }}
+            />
           </div>
-          <div className="mt-1 flex justify-between text-[0.6875rem] tabular-nums text-stone-600">
+          <div
+            className="mt-[0.25em] flex justify-between tabular-nums text-stone-600"
+            style={stickyCaptionStyle}
+          >
             <span>{formatTrackTime(displayProgress)}</span>
             <span>{formatTrackTime(durationMs)}</span>
           </div>
@@ -143,14 +261,18 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Currently playing on Spotify — open in Spotify"
-          className="block outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6]"
+          className="ml-3.5 block w-[min(100%,15rem)] min-w-0 outline-none transition-[opacity,transform] hover:opacity-95 focus-visible:ring-2 focus-visible:ring-emerald-700/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf0e6] sm:ml-5"
         >
           {body}
         </a>
       );
     }
     return (
-      <div role="region" aria-label="Currently playing on Spotify">
+      <div
+        className="ml-3.5 w-[min(100%,15rem)] min-w-0 sm:ml-5"
+        role="region"
+        aria-label="Currently playing on Spotify"
+      >
         {body}
       </div>
     );
@@ -216,20 +338,20 @@ function EmbeddedPostItFrame({
 }) {
   return (
     <div
-      className="relative z-0 mx-auto w-full max-w-[23rem] overflow-visible font-hand"
+      className="relative z-0 w-full min-w-0 overflow-visible font-hand"
       aria-label={ariaLabel}
       aria-hidden={ariaHidden}
     >
-      <div className="relative -rotate-1">
+      <div className="relative -rotate-[3deg]">
         <div
-          className="tape tape-sticky-top pointer-events-none absolute left-1/2 top-0 z-10"
+          className="tape tape-sticky-top pointer-events-none absolute left-1/2 top-0 z-10 scale-[0.72] -translate-y-px"
           aria-hidden
         />
         <div
           className={[
             "note-curl relative overflow-hidden rounded-sm border border-emerald-800/20",
-            "bg-gradient-to-br from-[#d8f5e2] via-[#c8efd4] to-[#b0e4c2]",
-            "px-3 pb-3 pt-6 shadow-[2px_3px_0_rgba(45,80,55,0.12),0_8px_20px_rgba(40,70,50,0.08)]",
+            "bg-gradient-to-br from-[#e6faee] via-[#daf5e4] to-[#c8efd6]",
+            "px-2.5 pb-2.5 pt-5 shadow-[2px_3px_0_rgba(45,80,55,0.12),0_8px_20px_rgba(40,70,50,0.08)]",
           ].join(" ")}
         >
           {children}

@@ -2,12 +2,22 @@
  * Spotify “currently playing” for a single user (refresh token flow).
  * `.env.local`: SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN
  *
+ * Optional: `SPOTIFY_IDLE_FAVORITE_TRACK_ID` — Spotify track id shown when nothing is playing
+ * (default: wave to earth “love.”).
+ *
  * Used by `GET /api/now-playing` — wire a client fetch to this route from About or elsewhere.
  */
 
+export type IdleFavoriteTrack = {
+  title: string;
+  artist: string;
+  url: string | null;
+  albumImageUrl: string | null;
+};
+
 export type NowPlayingResult =
   | { configured: false }
-  | { configured: true; playing: false }
+  | { configured: true; playing: false; idleFavorite: IdleFavoriteTrack | null }
   | {
       configured: true;
       playing: true;
@@ -52,9 +62,13 @@ function pickCoverImageUrl(item: SpotifyPlayingItem): string | null {
     item.album?.images?.length ? item.album.images : (item.images ?? []);
   const withUrl = pool.filter((i): i is SpotifyImage & { url: string } => typeof i?.url === "string");
   if (!withUrl.length) return null;
-  const sorted = [...withUrl].sort((a, b) => (a.width ?? 9999) - (b.width ?? 9999));
-  const preferred = sorted.find((i) => (i.width ?? 0) >= 48);
-  return (preferred ?? sorted[sorted.length - 1]).url;
+  // Prefer the largest asset (often 640×640); Spotify also returns 300px and 64px URLs.
+  const sorted = [...withUrl].sort((a, b) => {
+    const dw = (b.width ?? 0) - (a.width ?? 0);
+    if (dw !== 0) return dw;
+    return (b.height ?? 0) - (a.height ?? 0);
+  });
+  return sorted[0].url;
 }
 
 function isConfigured(): boolean {
@@ -94,6 +108,45 @@ async function getAccessToken(): Promise<string | null> {
   return data.access_token;
 }
 
+const DEFAULT_IDLE_FAVORITE_TRACK_ID = "5mtTAScDytxMMqZj14NmlN";
+
+async function fetchIdleFavoriteTrack(accessToken: string): Promise<IdleFavoriteTrack | null> {
+  const trackId =
+    process.env.SPOTIFY_IDLE_FAVORITE_TRACK_ID?.trim() || DEFAULT_IDLE_FAVORITE_TRACK_ID;
+  try {
+    const res = await fetch(
+      `https://api.spotify.com/v1/tracks/${encodeURIComponent(trackId)}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        next: { revalidate: 3600 },
+      },
+    );
+    if (!res.ok) return null;
+    const item = (await res.json()) as SpotifyPlayingItem;
+    const title = typeof item.name === "string" ? item.name : "";
+    if (!title) return null;
+    const fromArtists = Array.isArray(item.artists)
+      ? item.artists.map((a) => a?.name).filter(Boolean).join(", ")
+      : "";
+    return {
+      title,
+      artist: fromArtists || "Spotify",
+      url: item.external_urls?.spotify ?? null,
+      albumImageUrl: pickCoverImageUrl(item),
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function idleResponse(accessToken: string | null): Promise<NowPlayingResult> {
+  return {
+    configured: true,
+    playing: false,
+    idleFavorite: accessToken ? await fetchIdleFavoriteTrack(accessToken) : null,
+  };
+}
+
 export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
   if (!isConfigured()) {
     return { configured: false };
@@ -101,7 +154,7 @@ export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
 
   const accessToken = await getAccessToken();
   if (!accessToken) {
-    return { configured: true, playing: false };
+    return idleResponse(null);
   }
 
   const res = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
@@ -110,28 +163,28 @@ export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
   });
 
   if (res.status === 204) {
-    return { configured: true, playing: false };
+    return idleResponse(accessToken);
   }
 
   if (!res.ok) {
-    return { configured: true, playing: false };
+    return idleResponse(accessToken);
   }
 
   let payload: SpotifyCurrentlyPlaying;
   try {
     payload = (await res.json()) as SpotifyCurrentlyPlaying;
   } catch {
-    return { configured: true, playing: false };
+    return idleResponse(accessToken);
   }
 
   const item = payload.item;
   if (!item || typeof item !== "object") {
-    return { configured: true, playing: false };
+    return idleResponse(accessToken);
   }
 
   const title = typeof item.name === "string" ? item.name : "";
   if (!title) {
-    return { configured: true, playing: false };
+    return idleResponse(accessToken);
   }
 
   const fromArtists = Array.isArray(item.artists)

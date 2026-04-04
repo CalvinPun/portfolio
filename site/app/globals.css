@@ -25,7 +25,7 @@
 
 @media (min-width: 768px) {
   :root {
-    --folder-vw-cap: 88vw;
+    --folder-vw-cap: 96vw;
   }
 }
 
@@ -339,6 +339,65 @@ a {
 
   .polaroid-tilt:hover {
     transform: rotate(-3.5deg);
+  }
+}
+
+/* About folder — polaroid scales with its capped-width parent (see AboutSection) */
+.about-pocket-polaroid {
+  --photo-w: 100%;
+  --polaroid-pad-top: 6px;
+  --polaroid-pad-x: 6px;
+  width: 100%;
+  min-width: 0;
+}
+
+.about-pocket-polaroid .polaroid-tilt {
+  --polaroid-rot: 3.25deg;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  align-items: stretch;
+  transform: rotate(var(--polaroid-rot));
+}
+
+.about-pocket-polaroid .photo-frame.polaroid-card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.about-pocket-polaroid .polaroid-card__photo-wrap {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.about-pocket-polaroid .photo-caption {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.3rem 0.15rem 0.35rem;
+  font-size: min(1.25rem, 15cqw);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.about-pocket-polaroid .polaroid-card {
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.04),
+    0 2px 4px rgba(40, 30, 20, 0.06),
+    0 5px 10px rgba(40, 30, 20, 0.07);
+}
+
+.about-pocket-polaroid .polaroid-tilt:hover {
+  transform: rotate(calc(var(--polaroid-rot) + 2deg)) scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-pocket-polaroid .polaroid-tilt:hover {
+    transform: rotate(var(--polaroid-rot));
   }
 }
 
