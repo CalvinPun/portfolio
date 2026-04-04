@@ -10,9 +10,8 @@ type SocialLinksProps = {
   email: string;
 };
 
-function iconWrapClass() {
-  return "text-stone-600 transition-colors hover:text-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-700 rounded-sm";
-}
+const ICON_WRAP_CLASS =
+  "text-stone-600 transition-colors hover:text-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-700 rounded-sm";
 
 function IconHoverLabel({ children }: { children: string }) {
   return (
@@ -42,7 +41,7 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
     <nav className="mt-10 flex flex-wrap items-start gap-x-8 gap-y-9 pb-1" aria-label="Social and contact links">
       <a
         href={github}
-        className={`group relative ${iconWrapClass()}`}
+        className={`group relative ${ICON_WRAP_CLASS}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub profile"
@@ -67,7 +66,7 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
       </a>
       <a
         href={linkedin}
-        className={`group relative ${iconWrapClass()}`}
+        className={`group relative ${ICON_WRAP_CLASS}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn profile"
@@ -92,7 +91,7 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
       </a>
       <a
         href={instagram}
-        className={`group relative ${iconWrapClass()}`}
+        className={`group relative ${ICON_WRAP_CLASS}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Instagram @calvin_pun"
@@ -117,7 +116,7 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
       </a>
       <a
         href={youtube}
-        className={`group relative ${iconWrapClass()}`}
+        className={`group relative ${ICON_WRAP_CLASS}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="YouTube channel @corrotic"

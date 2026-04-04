@@ -5,12 +5,8 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 
 const NOTEBOOK_W = 1920;
 const NOTEBOOK_H = 2211;
-/**
- * `notebook-paper.svg` rules are 114px apart at 1920px wide. Slightly over-shoot
- * (~3.5%) so baselines track the printed lines (font metrics + stroke make 114 feel tight).
- */
+/** `notebook-paper.svg` rule spacing at 1920px wide. */
 const RULE_STEP_PX = 115;
-const RULE_LINE_SCALE = 1;
 
 const FALLBACK_LINE_HEIGHT =
   "max(1.35em, calc(100cqw * 114 / 1920 * 1.035))";
@@ -43,7 +39,7 @@ export function AboutNotebookOverlay({
     if (!el) return;
     const w = el.getBoundingClientRect().width;
     if (w <= 0) return;
-    setRuleLinePx(((w * RULE_STEP_PX) / NOTEBOOK_W) * RULE_LINE_SCALE);
+    setRuleLinePx((w * RULE_STEP_PX) / NOTEBOOK_W);
   }, []);
 
   useLayoutEffect(() => {

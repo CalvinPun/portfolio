@@ -5,10 +5,7 @@
 }
 
 :root {
-  --background: #faf0e6;
   --foreground: #1f1f1f;
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  /* --font-caveat is set on <html> by next/font; --font-hand must resolve there */
   --font-hand: var(--font-caveat), cursive;
   /* Polaroid — keep in sync with PolaroidCard.tsx Image width/height */
   --photo-w: 330px;
@@ -17,6 +14,10 @@
   --polaroid-pad-top: 14px;
   /* NYU Violet (brand) */
   --nyu-violet: #57068c;
+  /* Arrow draw animation timing */
+  --draw-arrow-start-delay: 1.15s;
+  --draw-arrow-shaft-dur: 2.35s;
+  --draw-arrow-head-dur: 0.8s;
 }
 
 html {
@@ -117,23 +118,8 @@ a {
   }
 }
 
-/* down-arrow.svg — starts after hero-pop finishes (max delay 0.42s + duration 0.65s), then shaft → head */
-:root {
-  --draw-arrow-start-delay: 1.15s;
-  --draw-arrow-shaft-dur: 2.35s;
-  --draw-arrow-head-dur: 0.8s;
-}
-
-@keyframes drawArrowShaft {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes drawArrowHead {
+/* Arrow draw — starts after hero-pop finishes */
+@keyframes drawArrow {
   from {
     stroke-dashoffset: 1;
   }
@@ -145,14 +131,14 @@ a {
 .draw-arrow-path--shaft {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: drawArrowShaft var(--draw-arrow-shaft-dur) cubic-bezier(0.33, 1, 0.68, 1)
+  animation: drawArrow var(--draw-arrow-shaft-dur) cubic-bezier(0.33, 1, 0.68, 1)
     var(--draw-arrow-start-delay) forwards;
 }
 
 .draw-arrow-path--head {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: drawArrowHead var(--draw-arrow-head-dur) cubic-bezier(0.33, 1, 0.68, 1)
+  animation: drawArrow var(--draw-arrow-head-dur) cubic-bezier(0.33, 1, 0.68, 1)
     calc(var(--draw-arrow-start-delay) + var(--draw-arrow-shaft-dur)) forwards;
 }
 
