@@ -24,7 +24,7 @@ export function AboutBucketList({ title, items }: Props) {
 
   return (
     <div className="relative z-0 w-[min(100%,13rem)] min-w-0 overflow-visible font-hand">
-      <div className="relative rotate-[-1.5deg]">
+      <div className="sticky-note-interactive sticky-note-interactive--lavender relative rotate-[-1.5deg]">
         <div
           className="tape tape-sticky-top pointer-events-none absolute left-[46%] top-0 z-10 scale-75 opacity-90"
           aria-hidden

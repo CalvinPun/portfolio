@@ -12,7 +12,7 @@ export function AboutPocketScrap({ text }: { text: string }) {
 
   return (
     <div className="relative z-0 w-full min-w-0 overflow-visible font-hand">
-      <div className="relative rotate-[2.75deg]">
+      <div className="sticky-note-interactive sticky-note-interactive--paper relative rotate-[2.75deg]">
         <div
           className="tape tape-sticky-top pointer-events-none absolute left-[42%] top-0 z-10 scale-75 opacity-90"
           aria-hidden

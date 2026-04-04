@@ -345,7 +345,7 @@ function EmbeddedPostItFrame({
       aria-label={ariaLabel}
       aria-hidden={ariaHidden}
     >
-      <div className="relative -rotate-[3deg]">
+      <div className="sticky-note-interactive sticky-note-interactive--green relative -rotate-[3deg]">
         <div
           className="tape tape-sticky-top pointer-events-none absolute left-1/2 top-0 z-10 scale-[0.72] -translate-y-px"
           aria-hidden
