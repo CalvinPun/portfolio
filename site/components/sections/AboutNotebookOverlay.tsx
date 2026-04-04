@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   ABOUT_NOTEBOOK_ARTBOARD_W as NOTEBOOK_W,
@@ -18,17 +18,13 @@ type Props = {
 };
 
 export function AboutNotebookOverlay({ notebookTitle, notebookLines }: Props) {
-  const [titleDate, setTitleDate] = useState("");
-
-  useEffect(() => {
-    setTitleDate(
-      new Date().toLocaleDateString("en-US", {
-        month: "numeric",
-        day: "numeric",
-        year: "2-digit",
-      }),
-    );
-  }, []);
+  const [titleDate] = useState(() =>
+    new Date().toLocaleDateString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      year: "2-digit",
+    }),
+  );
 
   return (
     <div className="relative w-full min-w-0 max-w-full [container-type:inline-size]">

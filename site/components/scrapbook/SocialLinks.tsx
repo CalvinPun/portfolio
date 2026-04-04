@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useState } from "react";
 
 type SocialLinksProps = {
@@ -47,9 +48,10 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
         aria-label="GitHub profile"
       >
         <span className="relative block h-9 w-9 shrink-0">
-          <img
+          <Image
             src="/github.svg"
             alt=""
+            fill
             className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
             aria-hidden
           />
@@ -72,9 +74,10 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
         aria-label="LinkedIn profile"
       >
         <span className="relative block h-9 w-9 shrink-0">
-          <img
+          <Image
             src="/linkedin.svg"
             alt=""
+            fill
             className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
             aria-hidden
           />
@@ -97,9 +100,10 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
         aria-label="Instagram @calvin_pun"
       >
         <span className="relative block h-9 w-9 shrink-0">
-          <img
+          <Image
             src="/instagram.svg"
             alt=""
+            fill
             className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
             aria-hidden
           />
@@ -122,9 +126,10 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
         aria-label="YouTube channel @corrotic"
       >
         <span className="relative block h-9 w-9 shrink-0">
-          <img
+          <Image
             src="/youtube.svg"
             alt=""
+            fill
             className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
             aria-hidden
           />
@@ -147,9 +152,10 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
           aria-label={`Copy ${email} to clipboard`}
         >
           <span className="relative block h-9 w-9 shrink-0">
-            <img
+            <Image
               src="/mail.svg"
               alt=""
+              fill
               className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
               aria-hidden
             />

@@ -74,7 +74,7 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
   const embedded = variant === "embedded";
   const [data, setData] = useState<NowPlayingResult | null>(null);
   const [fetchedAt, setFetchedAt] = useState<number | null>(null);
-  const [tick, setTick] = useState(0);
+  const [nowMs, setNowMs] = useState(() => Date.now());
 
   const load = useCallback(async () => {
     try {
@@ -89,13 +89,16 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
   }, []);
 
   useEffect(() => {
-    void load();
+    const initialId = window.setTimeout(() => void load(), 0);
     const id = window.setInterval(() => void load(), POLL_MS);
-    return () => window.clearInterval(id);
+    return () => {
+      window.clearTimeout(initialId);
+      window.clearInterval(id);
+    };
   }, [load]);
 
   useEffect(() => {
-    const id = window.setInterval(() => setTick((t) => t + 1), TICK_MS);
+    const id = window.setInterval(() => setNowMs(Date.now()), TICK_MS);
     return () => window.clearInterval(id);
   }, []);
 
@@ -105,9 +108,9 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
     }
     const p = data as PlayingPayload;
     if (!p.isPlaying || p.durationMs <= 0) return p.progressMs;
-    const elapsed = Date.now() - fetchedAt;
+    const elapsed = nowMs - fetchedAt;
     return Math.min(p.progressMs + elapsed, p.durationMs);
-  }, [data, fetchedAt, tick]);
+  }, [data, fetchedAt, nowMs]);
 
   const shell = embedded
     ? ""
