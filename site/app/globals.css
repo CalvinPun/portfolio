@@ -96,7 +96,6 @@ a {
 
 .hero-pop {
   opacity: 0;
-  animation: hero-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-pop-delay-1 {
@@ -113,6 +112,15 @@ a {
 
 .hero-pop-delay-4 {
   animation-delay: 0.42s;
+}
+
+.hero-stage.is-visible .hero-pop {
+  animation: hero-pop 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-stage.is-exiting {
+  opacity: 0;
+  transition: opacity 0.38s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -140,13 +148,19 @@ a {
 .draw-arrow-path--shaft {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: drawArrow var(--draw-arrow-shaft-dur) cubic-bezier(0.33, 1, 0.68, 1)
-    var(--draw-arrow-start-delay) forwards;
 }
 
 .draw-arrow-path--head {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
+}
+
+.hero-stage.is-visible .draw-arrow-path--shaft {
+  animation: drawArrow var(--draw-arrow-shaft-dur) cubic-bezier(0.33, 1, 0.68, 1)
+    var(--draw-arrow-start-delay) forwards;
+}
+
+.hero-stage.is-visible .draw-arrow-path--head {
   animation: drawArrow var(--draw-arrow-head-dur) cubic-bezier(0.33, 1, 0.68, 1)
     calc(var(--draw-arrow-start-delay) + var(--draw-arrow-shaft-dur)) forwards;
 }
@@ -459,6 +473,11 @@ a {
 
 .about-folder-stage.is-visible .about-folder-notebook {
   animation: about-folder-notebook-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+.about-folder-stage.is-exiting {
+  opacity: 0;
+  transition: opacity 0.38s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

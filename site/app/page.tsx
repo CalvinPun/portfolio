@@ -1,14 +1,67 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 import { ScrollDownCue } from "@/components/layout/ScrollDownCue";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 
 export default function Home() {
+  const heroRef = useRef<HTMLElement | null>(null);
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [heroExiting, setHeroExiting] = useState(false);
+  const heroExitTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const node = heroRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          if (heroExitTimeoutRef.current !== null) {
+            window.clearTimeout(heroExitTimeoutRef.current);
+            heroExitTimeoutRef.current = null;
+          }
+          setHeroExiting(false);
+          setHeroVisible(true);
+          return;
+        }
+
+        if (!heroVisible) return;
+        setHeroExiting(true);
+        if (heroExitTimeoutRef.current !== null) {
+          window.clearTimeout(heroExitTimeoutRef.current);
+        }
+        heroExitTimeoutRef.current = window.setTimeout(() => {
+          setHeroVisible(false);
+          setHeroExiting(false);
+          heroExitTimeoutRef.current = null;
+        }, 380);
+      },
+      {
+        threshold: 0.35,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      if (heroExitTimeoutRef.current !== null) {
+        window.clearTimeout(heroExitTimeoutRef.current);
+      }
+    };
+  }, [heroVisible]);
+
   return (
     <main className="min-h-screen text-stone-900">
       {/* Hero: arrow under content on small screens; pinned to bottom from lg up */}
       <section
+        ref={heroRef}
         id="hero"
-        className="relative scroll-mt-0 lg:min-h-[100dvh]"
+        className={`hero-stage relative scroll-mt-0 lg:min-h-[100dvh]${heroVisible ? " is-visible" : ""}${heroExiting ? " is-exiting" : ""}`}
         aria-label="Introduction"
       >
         <div className="flex flex-col justify-start px-4 pb-0 pt-12 sm:px-6 sm:pb-16 sm:pt-16 lg:min-h-[100dvh] lg:justify-center">

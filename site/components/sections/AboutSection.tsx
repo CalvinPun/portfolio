@@ -18,6 +18,8 @@ export function AboutSection() {
   const { notebookTitle, notebookLines, pocketPolaroid, pocketPolaroid2, pocketScrap, bucketList } = siteContent.about;
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const exitTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -25,7 +27,26 @@ export function AboutSection() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(Boolean(entry?.isIntersecting));
+        if (entry?.isIntersecting) {
+          if (exitTimeoutRef.current !== null) {
+            window.clearTimeout(exitTimeoutRef.current);
+            exitTimeoutRef.current = null;
+          }
+          setIsExiting(false);
+          setIsVisible(true);
+          return;
+        }
+
+        if (!isVisible) return;
+        setIsExiting(true);
+        if (exitTimeoutRef.current !== null) {
+          window.clearTimeout(exitTimeoutRef.current);
+        }
+        exitTimeoutRef.current = window.setTimeout(() => {
+          setIsVisible(false);
+          setIsExiting(false);
+          exitTimeoutRef.current = null;
+        }, 380);
       },
       {
         threshold: 0.28,
@@ -35,8 +56,13 @@ export function AboutSection() {
 
     observer.observe(node);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      if (exitTimeoutRef.current !== null) {
+        window.clearTimeout(exitTimeoutRef.current);
+      }
+    };
+  }, [isVisible]);
 
   return (
     <section
@@ -46,7 +72,7 @@ export function AboutSection() {
       aria-label="About"
     >
       <div
-        className={`about-folder-stage relative mx-auto w-full min-w-0${isVisible ? " is-visible" : ""}`}
+        className={`about-folder-stage relative mx-auto w-full min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
         style={{
           maxWidth: `min(100%, var(--folder-vw-cap), 112rem, calc((100dvh - 4rem) * ${MANILA_RATIO.toFixed(3)}))`,
         }}
