@@ -15,6 +15,12 @@ export type NowPlayingResult =
       artist: string;
       url: string | null;
       albumImageUrl: string | null;
+      /** Playback position from Spotify (ms). */
+      progressMs: number;
+      /** Track or episode length (ms). */
+      durationMs: number;
+      /** Whether audio is actively playing (false = paused). */
+      isPlaying: boolean;
     };
 
 type SpotifyTokenResponse = {
@@ -24,6 +30,8 @@ type SpotifyTokenResponse = {
 
 type SpotifyCurrentlyPlaying = {
   item: SpotifyPlayingItem | null;
+  progress_ms?: number;
+  is_playing?: boolean;
 };
 
 type SpotifyImage = { url?: string; width?: number; height?: number };
@@ -35,6 +43,8 @@ type SpotifyPlayingItem = {
   images?: SpotifyImage[];
   album?: { images?: SpotifyImage[] };
   external_urls?: { spotify?: string };
+  /** Track or episode length (ms). */
+  duration_ms?: number;
 };
 
 function pickCoverImageUrl(item: SpotifyPlayingItem): string | null {
@@ -133,6 +143,15 @@ export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
   const url = item.external_urls?.spotify ?? null;
   const albumImageUrl = pickCoverImageUrl(item);
 
+  const durationMs =
+    typeof item.duration_ms === "number" && item.duration_ms > 0
+      ? item.duration_ms
+      : 0;
+  const progressRaw = typeof payload.progress_ms === "number" ? payload.progress_ms : 0;
+  const progressMs =
+    durationMs > 0 ? Math.min(Math.max(0, progressRaw), durationMs) : Math.max(0, progressRaw);
+  const isPlaying = payload.is_playing !== false;
+
   return {
     configured: true,
     playing: true,
@@ -140,5 +159,8 @@ export async function getSpotifyNowPlaying(): Promise<NowPlayingResult> {
     artist,
     url,
     albumImageUrl,
+    progressMs,
+    durationMs,
+    isPlaying,
   };
 }
