@@ -87,6 +87,7 @@ export function AboutSection() {
           loading="eager"
           priority
         />
+        <div className="about-folder-texture absolute inset-0 z-[1] pointer-events-none" aria-hidden />
         {/* Left pocket — left of the folder crease (~49%); notebook sits on the right */}
         <div className="about-folder-pocket pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]">
           <div

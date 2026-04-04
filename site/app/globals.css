@@ -455,6 +455,38 @@ a {
   opacity: 0;
 }
 
+.about-folder-texture {
+  opacity: 0;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.24) 0, rgba(255, 255, 255, 0.1) 18%, transparent 42%),
+    radial-gradient(circle at 77% 68%, rgba(145, 102, 42, 0.14) 0, transparent 34%),
+    linear-gradient(110deg, rgba(255, 255, 255, 0.08), transparent 28%, rgba(116, 84, 41, 0.07) 61%, transparent 82%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(118, 86, 43, 0.026) 0,
+      rgba(118, 86, 43, 0.026) 1px,
+      transparent 1px,
+      transparent 9px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 2px,
+      transparent 2px,
+      transparent 14px
+    );
+  mix-blend-mode: multiply;
+  filter: saturate(0.88) contrast(1.04);
+  -webkit-mask-image: url("/manila-folder.svg");
+  mask-image: url("/manila-folder.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
 .about-folder-pocket {
   opacity: 0;
 }
@@ -465,6 +497,10 @@ a {
 
 .about-folder-stage.is-visible .about-folder-base {
   animation: about-folder-base-open 0.9s cubic-bezier(0.2, 0.9, 0.24, 1) 0.05s forwards;
+}
+
+.about-folder-stage.is-visible .about-folder-texture {
+  animation: about-folder-base-open 0.9s cubic-bezier(0.2, 0.9, 0.24, 1) 0.08s forwards;
 }
 
 .about-folder-stage.is-visible .about-folder-pocket {
@@ -482,6 +518,7 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .about-folder-base,
+  .about-folder-texture,
   .about-folder-pocket,
   .about-folder-notebook {
     animation: none;
