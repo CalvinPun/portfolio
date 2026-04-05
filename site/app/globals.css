@@ -343,6 +343,18 @@ a {
   padding: 0.25rem 0.15rem 0.15rem;
 }
 
+.project-modal__image {
+  justify-self: center;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(244, 236, 223, 0.92), rgba(239, 228, 212, 0.96));
+  box-shadow: none;
+}
+
+.project-modal__image-inner {
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
 .project-modal__close {
   position: absolute;
   right: 1rem;

@@ -121,95 +121,97 @@ export function ProjectsSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="work"
-      className={`projects-stage -mt-10 scroll-mt-8 px-4 pb-36 pt-0 sm:-mt-11 sm:px-6 sm:pb-40 sm:pt-1 lg:-mt-12${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
-      aria-labelledby="projects-title"
-    >
-      <div
-        ref={scaleFrameRef}
-        className="mx-auto w-full max-w-[68rem]"
-        style={desktopHeight !== null ? { height: `${desktopHeight}px` } : undefined}
+    <>
+      <section
+        ref={sectionRef}
+        id="work"
+        className={`projects-stage -mt-10 scroll-mt-8 px-4 pb-36 pt-0 sm:-mt-11 sm:px-6 sm:pb-40 sm:pt-1 lg:-mt-12${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+        aria-labelledby="projects-title"
       >
         <div
-          ref={scaleContentRef}
-          className="flex w-full max-w-[68rem] flex-col gap-5 lg:gap-4"
-          style={
-            desktopScale !== 1
-              ? {
-                  transform: `scale(${desktopScale})`,
-                  transformOrigin: "top center",
-                }
-              : undefined
-          }
+          ref={scaleFrameRef}
+          className="mx-auto w-full max-w-[68rem]"
+          style={desktopHeight !== null ? { height: `${desktopHeight}px` } : undefined}
         >
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
-            <h2
-              id="projects-title"
-              className="mt-1 text-[2.3rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]"
-            >
-              {title}
-            </h2>
-            {intro ? (
-              <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-stone-700 sm:text-lg">
-                {intro}
-              </p>
-            ) : null}
-          </div>
+          <div
+            ref={scaleContentRef}
+            className="flex w-full max-w-[68rem] flex-col gap-5 lg:gap-4"
+            style={
+              desktopScale !== 1
+                ? {
+                    transform: `scale(${desktopScale})`,
+                    transformOrigin: "top center",
+                  }
+                : undefined
+            }
+          >
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
+              <h2
+                id="projects-title"
+                className="mt-1 text-[2.3rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]"
+              >
+                {title}
+              </h2>
+              {intro ? (
+                <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-stone-700 sm:text-lg">
+                  {intro}
+                </p>
+              ) : null}
+            </div>
 
-          <div className="corkboard-frame rounded-[1.75rem] p-2.5 shadow-[0_16px_34px_rgba(74,47,23,0.12)] sm:p-3 lg:p-2.5">
-          <div className="corkboard relative overflow-hidden rounded-[1.35rem] px-3 py-4 sm:px-4 sm:py-4 lg:px-4.5 lg:py-4.5">
-              <div className="relative grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-y-8 md:gap-x-6 lg:gap-y-10 lg:gap-x-8">
-                {items.map((project, index) => (
-                  <article
-                    key={project.title}
-                    className={[
-                      "project-card project-card--paper relative flex flex-col rounded-[1.25rem] p-3.5 shadow-[0_10px_20px_rgba(55,31,15,0.1)] transition-transform duration-300 hover:-translate-y-1 sm:p-4 lg:p-3.5",
-                      cardLayouts[index % cardLayouts.length],
-                      cardRotations[index % cardRotations.length],
-                    ].join(" ")}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setActiveProjectIndex(index)}
-                      className="group block text-left"
-                      aria-label={`Open details for ${project.title}`}
+            <div className="corkboard-frame rounded-[1.75rem] p-2.5 shadow-[0_16px_34px_rgba(74,47,23,0.12)] sm:p-3 lg:p-2.5">
+            <div className="corkboard relative overflow-hidden rounded-[1.35rem] px-3 py-4 sm:px-4 sm:py-4 lg:px-4.5 lg:py-4.5">
+                <div className="relative grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-y-8 md:gap-x-6 lg:gap-y-10 lg:gap-x-8">
+                  {items.map((project, index) => (
+                    <article
+                      key={project.title}
+                      className={[
+                        "project-card project-card--paper relative flex flex-col rounded-[1.25rem] p-3.5 shadow-[0_10px_20px_rgba(55,31,15,0.1)] transition-transform duration-300 hover:-translate-y-1 sm:p-4 lg:p-3.5",
+                        cardLayouts[index % cardLayouts.length],
+                        cardRotations[index % cardRotations.length],
+                      ].join(" ")}
                     >
-                      <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
-                        {project.image ? (
-                          <Image
-                            src={project.image}
-                            alt={`${project.title} screenshot`}
-                            fill
-                            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
-                            sizes="(max-width: 767px) 100vw, 42vw"
-                          />
-                        ) : (
-                          <div className="project-image-placeholder">
-                            <span>{project.title}</span>
-                            <span>screenshot</span>
-                          </div>
-                        )}
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setActiveProjectIndex(index)}
+                        className="group block text-left"
+                        aria-label={`Open details for ${project.title}`}
+                      >
+                        <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
+                          {project.image ? (
+                            <Image
+                              src={project.image}
+                              alt={`${project.title} screenshot`}
+                              fill
+                              className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
+                              sizes="(max-width: 767px) 100vw, 42vw"
+                            />
+                          ) : (
+                            <div className="project-image-placeholder">
+                              <span>{project.title}</span>
+                              <span>screenshot</span>
+                            </div>
+                          )}
+                        </div>
 
-                      <div className="px-1 pb-1 pt-3 text-center">
-                        <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
-                          {project.title}
-                        </h3>
-                        <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
-                          {project.caption}
-                        </p>
-                      </div>
-                    </button>
-                  </article>
-                ))}
+                        <div className="px-1 pb-1 pt-3 text-center">
+                          <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
+                            {project.title}
+                          </h3>
+                          <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
+                            {project.caption}
+                          </p>
+                        </div>
+                      </button>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {activeProject ? (
         <div
@@ -232,22 +234,24 @@ export function ProjectsSection() {
               x
             </button>
 
-            <div className="grid gap-5 lg:grid-cols-[1.2fr_0.95fr] lg:items-start">
-              <div className="project-image-wrap relative min-h-[16rem] overflow-hidden rounded-[1.2rem] sm:min-h-[20rem]">
-                {activeProject.image ? (
-                  <Image
-                    src={activeProject.image}
-                    alt={`${activeProject.title} screenshot`}
-                    fill
-                    className="object-cover object-top"
-                    sizes="(max-width: 1023px) 100vw, 52vw"
-                  />
-                ) : (
-                  <div className="project-image-placeholder">
-                    <span>{activeProject.title}</span>
-                    <span>screenshot</span>
-                  </div>
-                )}
+            <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+              <div className="project-modal__image project-image-wrap relative min-h-[18rem] overflow-hidden rounded-[1.2rem] sm:min-h-[22rem]">
+                <div className="project-modal__image-inner absolute inset-x-1 inset-y-2 sm:inset-x-2 sm:inset-y-3">
+                  {activeProject.image ? (
+                    <Image
+                      src={activeProject.image}
+                      alt={`${activeProject.title} screenshot`}
+                      fill
+                      className="scale-[1.12] object-contain object-center"
+                      sizes="(max-width: 1023px) 100vw, 52vw"
+                    />
+                  ) : (
+                    <div className="project-image-placeholder">
+                      <span>{activeProject.title}</span>
+                      <span>screenshot</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="project-modal__body">
@@ -295,6 +299,6 @@ export function ProjectsSection() {
           </div>
         </div>
       ) : null}
-    </section>
+    </>
   );
 }

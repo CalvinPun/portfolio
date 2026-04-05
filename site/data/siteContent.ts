@@ -70,10 +70,8 @@ export const siteContent = {
         caption: "this website! live at calvinpun.com",
         image: "/portfolio.png",
         href: "https://github.com/CalvinPun/portfolio",
-        summary:
-          "Designed and built a playful portfolio experience with layered paper textures, handwritten details, and responsive scrapbook layouts.",
         description:
-          "A scrapbook-inspired portfolio built with Next.js, React, and custom motion details. I designed the visual system around layered paper, notebook textures, animated pencil arrows, and responsive scaling so the site still feels intentional across screen sizes instead of collapsing into a generic portfolio layout.",
+          "I built a scrapbook-inspired portfolio with Next.js, React, and TailwindCSS. I designed most of the site components and icons using Figma, and implemented a separate mobile view for smaller screens. I opted to create my own website instead of using a template/website builder because I wanted to have full control over the design and functionality, and it was a fun opportunity to practice my frontend development skills! ",
         links: [
           { label: "View Site", href: "https://calvinpun.com" },
           { label: "GitHub", href: "https://github.com/CalvinPun/portfolio" },
