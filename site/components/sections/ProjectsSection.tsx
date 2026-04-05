@@ -125,7 +125,7 @@ export function ProjectsSection() {
       <section
         ref={sectionRef}
         id="work"
-        className={`projects-stage -mt-10 scroll-mt-8 px-4 pb-36 pt-0 sm:-mt-11 sm:px-6 sm:pb-40 sm:pt-1 lg:-mt-12${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+        className={`projects-stage -mt-10 scroll-mt-8 px-4 pb-44 pt-0 sm:-mt-11 sm:px-6 sm:pb-48 sm:pt-1 lg:-mt-12${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
         aria-labelledby="projects-title"
       >
         <div
@@ -222,7 +222,7 @@ export function ProjectsSection() {
           onClick={() => setActiveProjectIndex(null)}
         >
           <div
-            className="project-modal relative w-full max-w-4xl rounded-[1.75rem] p-4 sm:p-5"
+            className="project-modal project-modal--enter relative w-full max-w-4xl rounded-[1.75rem] p-4 sm:p-5"
             onClick={(event) => event.stopPropagation()}
           >
             <button

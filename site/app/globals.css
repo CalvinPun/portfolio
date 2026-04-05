@@ -339,6 +339,21 @@ a {
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
+.project-modal--enter {
+  animation: project-modal-enter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes project-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .project-modal__body {
   padding: 0.25rem 0.15rem 0.15rem;
 }
