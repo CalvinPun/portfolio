@@ -84,7 +84,6 @@ export default function Home() {
       <AboutSection />
 
       <ProjectsSection />
-      <section id="contact" className="scroll-mt-20 md:min-h-[50vh]" aria-label="Contact" />
     </main>
   );
 }

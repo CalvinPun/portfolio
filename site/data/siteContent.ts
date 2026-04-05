@@ -72,6 +72,12 @@ export const siteContent = {
         href: "https://github.com/CalvinPun/portfolio",
         summary:
           "Designed and built a playful portfolio experience with layered paper textures, handwritten details, and responsive scrapbook layouts.",
+        description:
+          "A scrapbook-inspired portfolio built with Next.js, React, and custom motion details. I designed the visual system around layered paper, notebook textures, animated pencil arrows, and responsive scaling so the site still feels intentional across screen sizes instead of collapsing into a generic portfolio layout.",
+        links: [
+          { label: "View Site", href: "https://calvinpun.com" },
+          { label: "GitHub", href: "https://github.com/CalvinPun/portfolio" },
+        ],
       },
       // {
       //   title: "Signal Board",

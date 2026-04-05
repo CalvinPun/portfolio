@@ -28,9 +28,11 @@ export function ProjectsSection() {
   const scaleContentRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null);
   const [desktopScale, setDesktopScale] = useState(1);
   const [desktopHeight, setDesktopHeight] = useState<number | null>(null);
   const exitTimeoutRef = useRef<number | null>(null);
+  const activeProject = activeProjectIndex !== null ? items[activeProjectIndex] : null;
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -122,7 +124,7 @@ export function ProjectsSection() {
     <section
       ref={sectionRef}
       id="work"
-      className={`projects-stage -mt-2 scroll-mt-8 px-4 pb-10 pt-0 sm:-mt-3 sm:px-6 sm:pt-1 md:min-h-[100dvh] md:pb-8 lg:-mt-4 lg:flex lg:items-center${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+      className={`projects-stage -mt-10 scroll-mt-8 px-4 pb-36 pt-0 sm:-mt-11 sm:px-6 sm:pb-40 sm:pt-1 lg:-mt-12${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
       aria-labelledby="projects-title"
     >
       <div
@@ -169,69 +171,38 @@ export function ProjectsSection() {
                       cardRotations[index % cardRotations.length],
                     ].join(" ")}
                   >
-                    {project.href ? (
-                      <Link
-                        href={project.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="group block"
-                      >
-                        <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
-                          {project.image ? (
-                            <Image
-                              src={project.image}
-                              alt={`${project.title} screenshot`}
-                              fill
-                              className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
-                              sizes="(max-width: 767px) 100vw, 42vw"
-                            />
-                          ) : (
-                            <div className="project-image-placeholder">
-                              <span>{project.title}</span>
-                              <span>screenshot</span>
-                            </div>
-                          )}
-                        </div>
+                    <button
+                      type="button"
+                      onClick={() => setActiveProjectIndex(index)}
+                      className="group block text-left"
+                      aria-label={`Open details for ${project.title}`}
+                    >
+                      <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
+                        {project.image ? (
+                          <Image
+                            src={project.image}
+                            alt={`${project.title} screenshot`}
+                            fill
+                            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
+                            sizes="(max-width: 767px) 100vw, 42vw"
+                          />
+                        ) : (
+                          <div className="project-image-placeholder">
+                            <span>{project.title}</span>
+                            <span>screenshot</span>
+                          </div>
+                        )}
+                      </div>
 
-                        <div className="px-1 pb-1 pt-3 text-center">
-                          <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
-                            {project.title}
-                          </h3>
-                          <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
-                            {project.caption}
-                          </p>
-                        </div>
-                      </Link>
-                    ) : (
-                      <>
-                        <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
-                          {project.image ? (
-                            <Image
-                              src={project.image}
-                              alt={`${project.title} screenshot`}
-                              fill
-                              className="object-cover object-top"
-                              sizes="(max-width: 767px) 100vw, 42vw"
-                            />
-                          ) : (
-                            <div className="project-image-placeholder">
-                              <span>{project.title}</span>
-                              <span>screenshot</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="px-1 pb-1 pt-3 text-center">
-                          <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
-                            {project.title}
-                          </h3>
-                          <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
-                            {project.caption}
-                          </p>
-                        </div>
-                      </>
-                    )}
-
+                      <div className="px-1 pb-1 pt-3 text-center">
+                        <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
+                          {project.title}
+                        </h3>
+                        <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
+                          {project.caption}
+                        </p>
+                      </div>
+                    </button>
                   </article>
                 ))}
               </div>
@@ -239,6 +210,91 @@ export function ProjectsSection() {
           </div>
         </div>
       </div>
+
+      {activeProject ? (
+        <div
+          className="project-modal-overlay fixed inset-0 z-50 flex items-center justify-center px-4 py-6 sm:px-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-detail-title"
+          onClick={() => setActiveProjectIndex(null)}
+        >
+          <div
+            className="project-modal relative w-full max-w-4xl rounded-[1.75rem] p-4 sm:p-5"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setActiveProjectIndex(null)}
+              className="project-modal__close"
+              aria-label="Close project details"
+            >
+              x
+            </button>
+
+            <div className="grid gap-5 lg:grid-cols-[1.2fr_0.95fr] lg:items-start">
+              <div className="project-image-wrap relative min-h-[16rem] overflow-hidden rounded-[1.2rem] sm:min-h-[20rem]">
+                {activeProject.image ? (
+                  <Image
+                    src={activeProject.image}
+                    alt={`${activeProject.title} screenshot`}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1023px) 100vw, 52vw"
+                  />
+                ) : (
+                  <div className="project-image-placeholder">
+                    <span>{activeProject.title}</span>
+                    <span>screenshot</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="project-modal__body">
+                <p className="font-hand text-[1.35rem] tracking-[0.06em] text-stone-700">
+                  project details
+                </p>
+                <h3
+                  id="project-detail-title"
+                  className="mt-1 text-[2rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.35rem]"
+                >
+                  {activeProject.title}
+                </h3>
+                <p className="mt-3 text-base leading-7 text-stone-700">
+                  {activeProject.description ?? activeProject.summary}
+                </p>
+
+                {activeProject.links?.length ? (
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {activeProject.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-modal__link"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : activeProject.href ? (
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Link
+                      href={activeProject.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="project-modal__link"
+                    >
+                      Open Link
+                    </Link>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }
