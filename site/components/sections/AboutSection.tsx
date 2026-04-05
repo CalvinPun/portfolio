@@ -113,8 +113,8 @@ export function AboutSection() {
       aria-label="About"
     >
       <div className="hidden max-[520px]:block">
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-3 pt-4">
-          <div className="mx-auto w-full max-w-[26rem] min-w-0">
+        <div className="mx-auto flex w-full max-w-[28rem] flex-col gap-6 px-4 pb-3 pt-3">
+          <div className="mx-auto w-full max-w-[23rem] min-w-0">
             <AboutNotebookOverlay
               notebookTitle={notebookTitle}
               notebookLines={notebookLines}
@@ -122,41 +122,43 @@ export function AboutSection() {
           </div>
           <div
             ref={mobilePocketFrameRef}
-            className="mx-auto w-full max-w-[31rem] min-w-0 overflow-visible"
+            className="relative mx-auto w-full max-w-[24rem] min-w-0 overflow-visible"
             style={{ height: `${POCKET_BASE_H * mobilePocketScale}px` }}
           >
-            <div
-              className="relative origin-top-left overflow-visible [container-type:inline-size]"
-              style={{
-                width: `${POCKET_BASE_W}px`,
-                height: `${POCKET_BASE_H}px`,
-                transform: `scale(${mobilePocketScale})`,
-                transformOrigin: "top left",
-              }}
-            >
-              <div className="absolute left-[5%] top-[0%] w-[53%] min-w-0">
-                <CurrentlyPlayingSpotify variant="embedded" />
-              </div>
-              <div className="absolute right-[-3%] top-[0%] w-[44%] min-w-0">
-                <AboutPocketPolaroid
-                  src={pocketPolaroid.src}
-                  alt={pocketPolaroid.alt}
-                  caption={pocketPolaroid.caption}
-                  rotation={-2}
-                />
-              </div>
-              <div className="absolute left-[9%] top-[27%] w-[46%] min-w-0">
-                <AboutPocketScrap text={pocketScrap} />
-              </div>
-              <div className="absolute left-[3%] top-[44%] w-[44%] min-w-0 [container-type:inline-size]">
-                <AboutPocketPolaroid
-                  src={pocketPolaroid2.src}
-                  alt={pocketPolaroid2.alt}
-                  caption={pocketPolaroid2.caption}
-                />
-              </div>
-              <div className="absolute right-[7%] top-[54%] w-[40%] min-w-0">
-                <AboutBucketList title={bucketList.title} items={bucketList.items} />
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 overflow-visible">
+              <div
+                className="relative overflow-visible [container-type:inline-size]"
+                style={{
+                  width: `${POCKET_BASE_W}px`,
+                  height: `${POCKET_BASE_H}px`,
+                  transform: `scale(${mobilePocketScale})`,
+                  transformOrigin: "top center",
+                }}
+              >
+                <div className="absolute left-[5%] top-[0%] w-[53%] min-w-0">
+                  <CurrentlyPlayingSpotify variant="embedded" />
+                </div>
+                <div className="absolute right-[-3%] top-[0%] w-[44%] min-w-0">
+                  <AboutPocketPolaroid
+                    src={pocketPolaroid.src}
+                    alt={pocketPolaroid.alt}
+                    caption={pocketPolaroid.caption}
+                    rotation={-2}
+                  />
+                </div>
+                <div className="absolute left-[9%] top-[27%] w-[46%] min-w-0">
+                  <AboutPocketScrap text={pocketScrap} />
+                </div>
+                <div className="absolute left-[3%] top-[44%] w-[44%] min-w-0 [container-type:inline-size]">
+                  <AboutPocketPolaroid
+                    src={pocketPolaroid2.src}
+                    alt={pocketPolaroid2.alt}
+                    caption={pocketPolaroid2.caption}
+                  />
+                </div>
+                <div className="absolute right-[7%] top-[54%] w-[40%] min-w-0">
+                  <AboutBucketList title={bucketList.title} items={bucketList.items} />
+                </div>
               </div>
             </div>
           </div>
