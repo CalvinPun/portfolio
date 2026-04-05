@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
+import { ScrollDownCue } from "@/components/layout/ScrollDownCue";
 import { AboutBucketList } from "@/components/sections/AboutBucketList";
 import { AboutNotebookOverlay } from "@/components/sections/AboutNotebookOverlay";
 import { AboutPocketPolaroid } from "@/components/sections/AboutPocketPolaroid";
@@ -15,7 +16,7 @@ const MANILA_H = 2771;
 const MANILA_RATIO = MANILA_W / MANILA_H;
 
 export function AboutSection() {
-  const { notebookTitle, notebookLines, pocketPolaroid, pocketPolaroid2, pocketScrap, bucketList } = siteContent.about;
+  const { eyebrow, sectionTitle, notebookTitle, notebookLines, pocketPolaroid, pocketPolaroid2, pocketScrap, bucketList } = siteContent.about;
   const sectionRef = useRef<HTMLElement | null>(null);
   const pocketFrameRef = useRef<HTMLDivElement | null>(null);
   const mobilePocketFrameRef = useRef<HTMLDivElement | null>(null);
@@ -53,7 +54,7 @@ export function AboutSection() {
           setIsVisible(false);
           setIsExiting(false);
           exitTimeoutRef.current = null;
-        }, 380);
+        }, 720);
       },
       {
         threshold: 0.28,
@@ -109,11 +110,17 @@ export function AboutSection() {
     <section
       ref={sectionRef}
       id="about"
-      className="flex scroll-mt-0 flex-col justify-center overflow-x-clip overflow-y-visible px-1 pb-10 pt-0 sm:px-2 sm:py-12 md:min-h-[100dvh]"
+      className="-mt-4 flex scroll-mt-0 flex-col justify-center overflow-x-clip overflow-y-visible px-1 pb-8 pt-0 sm:-mt-6 sm:px-2 sm:py-10 md:min-h-[100dvh]"
       aria-label="About"
     >
       <div className="hidden max-[520px]:block">
         <div className="mx-auto flex w-full max-w-[28rem] flex-col gap-6 px-4 pb-3 pt-3">
+          <div className={`about-heading mx-auto max-w-2xl text-center${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
+            <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
+            <h2 className="mt-1 text-[2.45rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.9rem]">
+              {sectionTitle}
+            </h2>
+          </div>
           <div className="mx-auto w-full max-w-[23rem] min-w-0">
             <AboutNotebookOverlay
               notebookTitle={notebookTitle}
@@ -166,10 +173,18 @@ export function AboutSection() {
       </div>
 
       <div className="max-[520px]:hidden">
+        <div className="mx-auto mb-4 w-full max-w-[min(100%,var(--folder-vw-cap),106rem)] px-4 sm:mb-5 sm:px-6">
+          <div className={`about-heading mx-auto max-w-2xl text-center${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
+            <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
+            <h2 className="mt-1 text-[2.3rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]">
+              {sectionTitle}
+            </h2>
+          </div>
+        </div>
         <div
           className={`about-folder-stage relative mx-auto w-full min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
           style={{
-            maxWidth: `min(100%, var(--folder-vw-cap), 112rem, calc((100dvh - 4rem) * ${MANILA_RATIO.toFixed(3)}))`,
+            maxWidth: `min(100%, var(--folder-vw-cap), 106rem, calc((100dvh - 6.25rem) * ${MANILA_RATIO.toFixed(3)}))`,
           }}
         >
           <Image
@@ -229,6 +244,19 @@ export function AboutSection() {
               notebookLines={notebookLines}
             />
           </div>
+        </div>
+        <div
+          className={`scroll-cue-stage pointer-events-none mt-2 flex justify-center pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-4 sm:mt-3 sm:pt-5${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+        >
+          <span className="pointer-events-auto">
+            <ScrollDownCue
+              targetId="work"
+              scrollPastPx={20}
+              ariaLabel="Scroll to projects section"
+              mirrored
+              forceVisible={isVisible || isExiting}
+            />
+          </span>
         </div>
       </div>
     </section>

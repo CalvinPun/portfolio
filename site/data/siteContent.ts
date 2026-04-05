@@ -21,6 +21,8 @@ export const siteContent = {
     photoSrc: "/me.jpg",
   },
   about: {
+    eyebrow: "about me",
+    sectionTitle: "a digital recollection of who i am",
     /** Trailing date is appended in the UI from the visitor’s current date. */
     notebookTitle: "about... me!",
     /** Mini polaroid to the right of the Spotify post-it (`public/` path). */
@@ -55,6 +57,43 @@ export const siteContent = {
       "=======================================",
       "// gratitude",
       "exit(0); (thanks for reading!)",
+    ],
+  },
+  projects: {
+    eyebrow: "projects",
+    title: "stuff i've built",
+    intro:
+      "",
+    items: [
+      {
+        title: "personal portfolio site",
+        caption: "this website! live at calvinpun.com",
+        image: "/portfolio.png",
+        href: "https://github.com/CalvinPun/portfolio",
+        summary:
+          "Designed and built a playful portfolio experience with layered paper textures, handwritten details, and responsive scrapbook layouts.",
+      },
+      // {
+      //   title: "Signal Board",
+      //   image: "",
+      //   caption: "Operational metrics, made legible",
+      //   summary:
+      //     "Designed a monitoring dashboard that turns noisy operational metrics into quick, readable decisions.",
+      // },
+      // {
+      //   title: "Pocket Playlist",
+      //   image: "",
+      //   caption: "A music journal with memories attached",
+      //   summary:
+      //     "Created a music journaling experience for saving songs with notes, moods, and tiny memories attached.",
+      // },
+      // {
+      //   title: "Studio Archive",
+      //   image: "",
+      //   caption: "Editorial portfolio system",
+      //   summary:
+      //     "Developed a portfolio archive with editorial layouts, reusable content blocks, and fast image delivery.",
+      // },
     ],
   },
 } as const;

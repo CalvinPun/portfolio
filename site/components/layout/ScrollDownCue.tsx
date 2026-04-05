@@ -9,18 +9,35 @@ const ARROW_VIEW_H = 1179;
 /** Near-black graphite; not pure #000 so it reads like pencil on paper */
 const PENCIL_STROKE = "#141414";
 const PENCIL_STROKE_W = 30;
-/** Extra px past `#about` top (after `scroll-margin`) */
-const SCROLL_PAST_ABOUT_PX = 24;
 
-export function ScrollDownCue() {
+type ScrollDownCueProps = {
+  targetId?: string;
+  scrollPastPx?: number;
+  ariaLabel?: string;
+  mirrored?: boolean;
+  forceVisible?: boolean;
+};
+
+export function ScrollDownCue({
+  targetId = "about",
+  scrollPastPx = 24,
+  ariaLabel = "Scroll to about section",
+  mirrored = false,
+  forceVisible = false,
+}: ScrollDownCueProps = {}) {
   const filterUid = useId().replace(/:/g, "");
   const filterId = `arrow-pencil-${filterUid}`;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [inView, setInView] = useState(true);
   const [drawKey, setDrawKey] = useState(0);
   const prevVisibleRef = useRef<boolean | null>(null);
+  const isShown = forceVisible || inView;
 
   useEffect(() => {
+    if (forceVisible) {
+      return;
+    }
+
     const el = buttonRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -36,16 +53,16 @@ export function ScrollDownCue() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [forceVisible]);
 
-  function scrollToAbout() {
-    const el = document.getElementById("about");
+  function scrollToTarget() {
+    const el = document.getElementById(targetId);
     if (!el) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
     const rect = el.getBoundingClientRect();
     const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
-    const top = rect.top + window.scrollY - scrollMarginTop + SCROLL_PAST_ABOUT_PX;
+    const top = rect.top + window.scrollY - scrollMarginTop + scrollPastPx;
     window.scrollTo({ top, behavior });
   }
 
@@ -53,22 +70,25 @@ export function ScrollDownCue() {
     <button
       ref={buttonRef}
       type="button"
-      onClick={scrollToAbout}
+      onClick={scrollToTarget}
       className={[
         "group inline-flex shrink-0 flex-col items-center border-0 bg-transparent pb-1",
-        "transition-opacity duration-200 motion-reduce:transition-none",
-        inView
-          ? "opacity-100 hover:opacity-80"
-          : "pointer-events-none opacity-0",
+        "transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none",
+        isShown
+          ? "translate-y-0 opacity-100 hover:opacity-80"
+          : "pointer-events-none translate-y-2 opacity-0",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-500",
       ].join(" ")}
-      aria-label="Scroll to about section"
-      aria-hidden={!inView}
-      tabIndex={inView ? undefined : -1}
+      aria-label={ariaLabel}
+      aria-hidden={!isShown}
+      tabIndex={isShown ? undefined : -1}
     >
       <span
         className="block h-[6rem] shrink-0 sm:h-[9rem] lg:h-[11rem]"
-        style={{ aspectRatio: `${ARROW_VIEW_W} / ${ARROW_VIEW_H}` }}
+        style={{
+          aspectRatio: `${ARROW_VIEW_W} / ${ARROW_VIEW_H}`,
+          transform: mirrored ? "scaleX(-1)" : undefined,
+        }}
         aria-hidden
       >
         <svg

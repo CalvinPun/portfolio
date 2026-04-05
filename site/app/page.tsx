@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollDownCue } from "@/components/layout/ScrollDownCue";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { ProjectsSection } from "@/components/sections/ProjectsSection";
 
 export default function Home() {
   const heroRef = useRef<HTMLElement | null>(null);
@@ -37,7 +38,7 @@ export default function Home() {
           setHeroVisible(false);
           setHeroExiting(false);
           heroExitTimeoutRef.current = null;
-        }, 380);
+        }, 720);
       },
       {
         threshold: 0.35,
@@ -82,7 +83,7 @@ export default function Home() {
 
       <AboutSection />
 
-      <section id="work" className="scroll-mt-20 md:min-h-[80vh]" aria-label="Work" />
+      <ProjectsSection />
       <section id="contact" className="scroll-mt-20 md:min-h-[50vh]" aria-label="Contact" />
     </main>
   );

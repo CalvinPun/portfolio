@@ -1,0 +1,244 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+import { siteContent } from "@/data/siteContent";
+
+const cardLayouts = [
+  "md:col-span-5 md:col-start-2",
+  "md:col-span-5 md:col-start-7",
+  "md:col-span-5 md:col-start-2",
+  "md:col-span-5 md:col-start-7",
+];
+
+const cardRotations = [
+  "",
+  "",
+  "",
+  "",
+];
+const DESKTOP_MAX_SCALE = 0.94;
+
+export function ProjectsSection() {
+  const { eyebrow, title, intro, items } = siteContent.projects;
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const scaleFrameRef = useRef<HTMLDivElement | null>(null);
+  const scaleContentRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const [desktopScale, setDesktopScale] = useState(1);
+  const [desktopHeight, setDesktopHeight] = useState<number | null>(null);
+  const exitTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          if (exitTimeoutRef.current !== null) {
+            window.clearTimeout(exitTimeoutRef.current);
+            exitTimeoutRef.current = null;
+          }
+          setIsExiting(false);
+          setIsVisible(true);
+          return;
+        }
+
+        if (!isVisible) return;
+        setIsExiting(true);
+        if (exitTimeoutRef.current !== null) {
+          window.clearTimeout(exitTimeoutRef.current);
+        }
+        exitTimeoutRef.current = window.setTimeout(() => {
+          setIsVisible(false);
+          setIsExiting(false);
+          exitTimeoutRef.current = null;
+        }, 720);
+      },
+      {
+        threshold: 0.22,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      if (exitTimeoutRef.current !== null) {
+        window.clearTimeout(exitTimeoutRef.current);
+      }
+    };
+  }, [isVisible]);
+
+  useEffect(() => {
+    const frame = scaleFrameRef.current;
+    const content = scaleContentRef.current;
+    const section = sectionRef.current;
+    if (!frame || !content || !section) return;
+
+    const updateScale = () => {
+      if (window.innerWidth < 1024) {
+        setDesktopScale(1);
+        setDesktopHeight(null);
+        return;
+      }
+
+      const contentWidth = content.offsetWidth;
+      const contentHeight = content.offsetHeight;
+      const frameWidth = frame.clientWidth;
+      const sectionStyles = window.getComputedStyle(section);
+      const sectionPaddingTop = Number.parseFloat(sectionStyles.paddingTop) || 0;
+      const sectionPaddingBottom = Number.parseFloat(sectionStyles.paddingBottom) || 0;
+      const availableHeight = window.innerHeight - sectionPaddingTop - sectionPaddingBottom;
+      const widthScale = frameWidth / contentWidth;
+      const heightScale = availableHeight / contentHeight;
+      const nextScale = Math.min(DESKTOP_MAX_SCALE, widthScale, heightScale);
+      const safeScale = Number.isFinite(nextScale) && nextScale > 0 ? nextScale : 1;
+
+      setDesktopScale(safeScale);
+      setDesktopHeight(contentHeight * safeScale);
+    };
+
+    updateScale();
+
+    const resizeObserver = new ResizeObserver(() => updateScale());
+    resizeObserver.observe(frame);
+    resizeObserver.observe(content);
+
+    window.addEventListener("resize", updateScale);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateScale);
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="work"
+      className={`projects-stage -mt-2 scroll-mt-8 px-4 pb-10 pt-0 sm:-mt-3 sm:px-6 sm:pt-1 md:min-h-[100dvh] md:pb-8 lg:-mt-4 lg:flex lg:items-center${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+      aria-labelledby="projects-title"
+    >
+      <div
+        ref={scaleFrameRef}
+        className="mx-auto w-full max-w-[68rem]"
+        style={desktopHeight !== null ? { height: `${desktopHeight}px` } : undefined}
+      >
+        <div
+          ref={scaleContentRef}
+          className="flex w-full max-w-[68rem] flex-col gap-5 lg:gap-4"
+          style={
+            desktopScale !== 1
+              ? {
+                  transform: `scale(${desktopScale})`,
+                  transformOrigin: "top center",
+                }
+              : undefined
+          }
+        >
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
+            <h2
+              id="projects-title"
+              className="mt-1 text-[2.3rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]"
+            >
+              {title}
+            </h2>
+            {intro ? (
+              <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-stone-700 sm:text-lg">
+                {intro}
+              </p>
+            ) : null}
+          </div>
+
+          <div className="corkboard-frame rounded-[1.75rem] p-2.5 shadow-[0_16px_34px_rgba(74,47,23,0.12)] sm:p-3 lg:p-2.5">
+          <div className="corkboard relative overflow-hidden rounded-[1.35rem] px-3 py-4 sm:px-4 sm:py-4 lg:px-4.5 lg:py-4.5">
+              <div className="relative grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-y-8 md:gap-x-6 lg:gap-y-10 lg:gap-x-8">
+                {items.map((project, index) => (
+                  <article
+                    key={project.title}
+                    className={[
+                      "project-card project-card--paper relative flex flex-col rounded-[1.25rem] p-3.5 shadow-[0_10px_20px_rgba(55,31,15,0.1)] transition-transform duration-300 hover:-translate-y-1 sm:p-4 lg:p-3.5",
+                      cardLayouts[index % cardLayouts.length],
+                      cardRotations[index % cardRotations.length],
+                    ].join(" ")}
+                  >
+                    {project.href ? (
+                      <Link
+                        href={project.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group block"
+                      >
+                        <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
+                          {project.image ? (
+                            <Image
+                              src={project.image}
+                              alt={`${project.title} screenshot`}
+                              fill
+                              className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
+                              sizes="(max-width: 767px) 100vw, 42vw"
+                            />
+                          ) : (
+                            <div className="project-image-placeholder">
+                              <span>{project.title}</span>
+                              <span>screenshot</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="px-1 pb-1 pt-3 text-center">
+                          <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
+                            {project.title}
+                          </h3>
+                          <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
+                            {project.caption}
+                          </p>
+                        </div>
+                      </Link>
+                    ) : (
+                      <>
+                        <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
+                          {project.image ? (
+                            <Image
+                              src={project.image}
+                              alt={`${project.title} screenshot`}
+                              fill
+                              className="object-cover object-top"
+                              sizes="(max-width: 767px) 100vw, 42vw"
+                            />
+                          ) : (
+                            <div className="project-image-placeholder">
+                              <span>{project.title}</span>
+                              <span>screenshot</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="px-1 pb-1 pt-3 text-center">
+                          <h3 className="text-[1.55rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[1.7rem] lg:text-[1.5rem]">
+                            {project.title}
+                          </h3>
+                          <p className="mx-auto mt-1 max-w-[21rem] text-[0.9rem] leading-5 text-stone-700 sm:text-[0.96rem] lg:text-[0.88rem]">
+                            {project.caption}
+                          </p>
+                        </div>
+                      </>
+                    )}
+
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
