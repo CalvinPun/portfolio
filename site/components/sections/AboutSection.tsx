@@ -17,9 +17,14 @@ const MANILA_RATIO = MANILA_W / MANILA_H;
 export function AboutSection() {
   const { notebookTitle, notebookLines, pocketPolaroid, pocketPolaroid2, pocketScrap, bucketList } = siteContent.about;
   const sectionRef = useRef<HTMLElement | null>(null);
+  const pocketFrameRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [pocketScale, setPocketScale] = useState(1);
   const exitTimeoutRef = useRef<number | null>(null);
+  const POCKET_BASE_W = 496;
+  const POCKET_BASE_H = Math.round(POCKET_BASE_W / 0.78);
+  const POCKET_MAX_SCALE = 1.18;
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -64,6 +69,23 @@ export function AboutSection() {
     };
   }, [isVisible]);
 
+  useEffect(() => {
+    const node = pocketFrameRef.current;
+    if (!node) return;
+
+    const updateScale = () => {
+      const nextScale = Math.min(POCKET_MAX_SCALE, node.clientWidth / POCKET_BASE_W);
+      setPocketScale(nextScale > 0 ? nextScale : 1);
+    };
+
+    updateScale();
+
+    const observer = new ResizeObserver(() => updateScale());
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -89,12 +111,20 @@ export function AboutSection() {
         />
         <div className="about-folder-texture absolute inset-0 z-[1] pointer-events-none" aria-hidden />
         {/* Left pocket — left of the folder crease (~49%); notebook sits on the right */}
-        <div className="about-folder-pocket pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]">
+        <div
+          ref={pocketFrameRef}
+          className="about-folder-pocket pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]"
+        >
           <div
-            className="relative w-full max-w-[11rem] min-w-0 origin-top-left overflow-visible [container-type:inline-size] sm:max-w-[14rem] md:max-w-[31rem] lg:scale-[1.06] xl:scale-[1.12] 2xl:scale-[1.18]"
-            style={{ aspectRatio: "0.78 / 1" }}
+            className="relative origin-top-left overflow-visible [container-type:inline-size]"
+            style={{
+              width: `${POCKET_BASE_W}px`,
+              height: `${POCKET_BASE_H}px`,
+              transform: `scale(${pocketScale})`,
+              transformOrigin: "top left",
+            }}
           >
-            <div className="absolute left-[5%] top-[0%] w-[60%] min-w-0 md:w-[53%]">
+            <div className="absolute left-[5%] top-[0%] w-[53%] min-w-0">
               <CurrentlyPlayingSpotify variant="embedded" />
             </div>
             <div className="absolute right-[-3%] top-[0%] w-[44%] min-w-0">
@@ -115,7 +145,7 @@ export function AboutSection() {
                 caption={pocketPolaroid2.caption}
               />
             </div>
-            <div className="absolute right-[7%] top-[58%] w-[40%] min-w-0 md:top-[54%]">
+            <div className="absolute right-[7%] top-[54%] w-[40%] min-w-0">
               <AboutBucketList title={bucketList.title} items={bucketList.items} />
             </div>
           </div>
