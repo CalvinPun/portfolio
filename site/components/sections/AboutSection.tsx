@@ -113,7 +113,7 @@ export function AboutSection() {
         {/* Left pocket — left of the folder crease (~49%); notebook sits on the right */}
         <div
           ref={pocketFrameRef}
-          className="about-folder-pocket pointer-events-auto absolute left-[7%] right-[53%] top-[8%] z-20 min-w-0 overflow-visible"
+          className="about-folder-pocket pointer-events-auto absolute left-[5.5%] right-[52.5%] top-[6.8%] z-20 min-w-0 overflow-visible sm:left-[6%] sm:top-[7%] md:left-[7%] md:right-[53%] md:top-[8%]"
         >
           <div
             className="relative origin-top-left overflow-visible [container-type:inline-size]"
