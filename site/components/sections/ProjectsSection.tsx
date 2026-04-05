@@ -172,12 +172,12 @@ export function ProjectsSection() {
                         cardRotations[index % cardRotations.length],
                       ].join(" ")}
                     >
-                      <button
-                        type="button"
-                        onClick={() => setActiveProjectIndex(index)}
-                        className="group block text-left"
-                        aria-label={`Open details for ${project.title}`}
-                      >
+                    <button
+                      type="button"
+                      onClick={() => setActiveProjectIndex(index)}
+                      className="group block cursor-pointer text-left"
+                      aria-label={`Open details for ${project.title}`}
+                    >
                         <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
                           {project.image ? (
                             <Image
