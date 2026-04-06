@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const dmSans = localFont({
@@ -59,6 +60,7 @@ export default function RootLayout({
     <html lang="en" className={`${dmSans.variable} ${caveat.variable}`}>
       <body className="font-sans antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
