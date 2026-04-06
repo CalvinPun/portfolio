@@ -121,7 +121,9 @@ export function AboutSection() {
               {sectionTitle}
             </h2>
           </div>
-          <div className="mx-auto w-full max-w-[23rem] min-w-0">
+          <div
+            className={`about-mobile-piece about-mobile-piece--notebook about-mobile-piece-delay-1 mx-auto w-full max-w-[23rem] min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+          >
             <AboutNotebookOverlay
               notebookTitle={notebookTitle}
               notebookLines={notebookLines}
@@ -142,10 +144,10 @@ export function AboutSection() {
                   transformOrigin: "top center",
                 }}
               >
-                <div className="absolute left-[5%] top-[0%] w-[53%] min-w-0">
+                <div className={`about-mobile-piece about-mobile-piece-delay-2 absolute left-[5%] top-[0%] w-[53%] min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
                   <CurrentlyPlayingSpotify variant="embedded" />
                 </div>
-                <div className="absolute right-[-3%] top-[0%] w-[44%] min-w-0">
+                <div className={`about-mobile-piece about-mobile-piece-delay-3 absolute right-[-3%] top-[0%] w-[44%] min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
                   <AboutPocketPolaroid
                     src={pocketPolaroid.src}
                     alt={pocketPolaroid.alt}
@@ -153,17 +155,17 @@ export function AboutSection() {
                     rotation={-2}
                   />
                 </div>
-                <div className="absolute left-[9%] top-[27%] w-[46%] min-w-0">
+                <div className={`about-mobile-piece about-mobile-piece-delay-4 absolute left-[9%] top-[27%] w-[46%] min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
                   <AboutPocketScrap text={pocketScrap} />
                 </div>
-                <div className="absolute left-[3%] top-[44%] w-[44%] min-w-0 [container-type:inline-size]">
+                <div className={`about-mobile-piece about-mobile-piece-delay-5 absolute left-[3%] top-[44%] w-[44%] min-w-0 [container-type:inline-size]${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
                   <AboutPocketPolaroid
                     src={pocketPolaroid2.src}
                     alt={pocketPolaroid2.alt}
                     caption={pocketPolaroid2.caption}
                   />
                 </div>
-                <div className="absolute right-[7%] top-[54%] w-[40%] min-w-0">
+                <div className={`about-mobile-piece about-mobile-piece-delay-6 absolute right-[7%] top-[54%] w-[40%] min-w-0${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
                   <AboutBucketList title={bucketList.title} items={bucketList.items} />
                 </div>
               </div>
