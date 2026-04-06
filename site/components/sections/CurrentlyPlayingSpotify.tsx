@@ -10,7 +10,7 @@ import {
   ABOUT_STICKY_PRIMARY_FONT_CQW,
   ABOUT_STICKY_SECONDARY_FONT_CQW,
 } from "@/lib/aboutNotebookTypeScale";
-import type { NowPlayingResult } from "@/lib/spotifyNowPlaying";
+import { DEFAULT_IDLE_FAVORITE_TRACK, type NowPlayingResult } from "@/lib/spotifyNowPlaying";
 
 const stickyLineCompact = ABOUT_NOTEBOOK_LINE_CQW * 0.92;
 
@@ -58,9 +58,7 @@ const TICK_MS = 250;
 /** Fallback when the API doesn’t return `idleFavorite` (e.g. no token). Same track as default on the server. */
 const IDLE_FAVORITE_FALLBACK = {
   header: "current favorite song",
-  title: "love.",
-  artist: "wave to earth",
-  spotifyUrl: "https://open.spotify.com/track/5mtTAScDytxMMqZj14NmlN",
+  ...DEFAULT_IDLE_FAVORITE_TRACK,
 } as const;
 
 type PlayingPayload = Extract<NowPlayingResult, { configured: true; playing: true }>;
@@ -174,8 +172,8 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
       const fav = data.idleFavorite;
       const idleTitle = fav?.title ?? IDLE_FAVORITE_FALLBACK.title;
       const idleArtist = fav?.artist ?? IDLE_FAVORITE_FALLBACK.artist;
-      const idleHref = fav?.url ?? IDLE_FAVORITE_FALLBACK.spotifyUrl;
-      const idleCover = fav?.albumImageUrl ?? null;
+      const idleHref = fav?.url ?? IDLE_FAVORITE_FALLBACK.url;
+      const idleCover = fav?.albumImageUrl ?? IDLE_FAVORITE_FALLBACK.albumImageUrl;
       const idleAria = `Open ${idleTitle} by ${idleArtist} on Spotify`;
       const idleBody = (
         <EmbeddedPostItFrame aria-label="Current favorite song">

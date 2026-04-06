@@ -15,6 +15,13 @@ export type IdleFavoriteTrack = {
   albumImageUrl: string | null;
 };
 
+export const DEFAULT_IDLE_FAVORITE_TRACK: IdleFavoriteTrack = {
+  title: "love.",
+  artist: "wave to earth",
+  url: "https://open.spotify.com/track/5mtTAScDytxMMqZj14NmlN",
+  albumImageUrl: "/wave-to-earth-love.jpg",
+};
+
 export type NowPlayingResult =
   | { configured: false }
   | { configured: true; playing: false; idleFavorite: IdleFavoriteTrack | null }
@@ -131,8 +138,8 @@ async function fetchIdleFavoriteTrack(accessToken: string): Promise<IdleFavorite
     return {
       title,
       artist: fromArtists || "Spotify",
-      url: item.external_urls?.spotify ?? null,
-      albumImageUrl: pickCoverImageUrl(item),
+      url: item.external_urls?.spotify ?? DEFAULT_IDLE_FAVORITE_TRACK.url,
+      albumImageUrl: pickCoverImageUrl(item) ?? DEFAULT_IDLE_FAVORITE_TRACK.albumImageUrl,
     };
   } catch {
     return null;
@@ -140,10 +147,11 @@ async function fetchIdleFavoriteTrack(accessToken: string): Promise<IdleFavorite
 }
 
 async function idleResponse(accessToken: string | null): Promise<NowPlayingResult> {
+  const idleFavorite = accessToken ? await fetchIdleFavoriteTrack(accessToken) : null;
   return {
     configured: true,
     playing: false,
-    idleFavorite: accessToken ? await fetchIdleFavoriteTrack(accessToken) : null,
+    idleFavorite: idleFavorite ?? DEFAULT_IDLE_FAVORITE_TRACK,
   };
 }
 
