@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { SectionDots } from "@/components/layout/SectionDots";
 import { ScrollDownCue } from "@/components/layout/ScrollDownCue";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -58,6 +59,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen text-stone-900">
+      <SectionDots />
+
       {/* Hero: arrow under content on small screens; pinned to bottom from lg up */}
       <section
         ref={heroRef}
