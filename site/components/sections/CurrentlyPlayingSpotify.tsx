@@ -89,11 +89,43 @@ export function CurrentlyPlayingSpotify({ variant = "default" }: Props) {
   }, []);
 
   useEffect(() => {
-    const initialId = window.setTimeout(() => void load(), 0);
-    const id = window.setInterval(() => void load(), POLL_MS);
+    let intervalId: number | null = null;
+
+    const stopPolling = () => {
+      if (intervalId !== null) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const startPolling = () => {
+      if (document.visibilityState !== "visible" || intervalId !== null) return;
+      intervalId = window.setInterval(() => void load(), POLL_MS);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        void load();
+        startPolling();
+        return;
+      }
+
+      stopPolling();
+    };
+
+    const initialId = window.setTimeout(() => {
+      if (document.visibilityState === "visible") {
+        void load();
+      }
+      startPolling();
+    }, 0);
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       window.clearTimeout(initialId);
-      window.clearInterval(id);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopPolling();
     };
   }, [load]);
 
