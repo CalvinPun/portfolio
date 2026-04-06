@@ -19,7 +19,7 @@ const cardRotations = [
   "",
   "",
 ];
-const DESKTOP_MAX_SCALE = 0.94;
+const DESKTOP_MAX_SCALE = 1.18;
 
 export function ProjectsSection() {
   const { eyebrow, title, intro, items } = siteContent.projects;
@@ -125,17 +125,17 @@ export function ProjectsSection() {
       <section
         ref={sectionRef}
         id="work"
-        className={`projects-stage -mt-10 scroll-mt-8 px-4 pb-44 pt-0 sm:-mt-11 sm:px-6 sm:pb-48 sm:pt-1 lg:-mt-12${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
+        className={`projects-stage -mt-2 scroll-mt-8 px-4 pb-44 pt-0 sm:-mt-3 sm:px-6 sm:pb-48 sm:pt-1 lg:-mt-4${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}
         aria-labelledby="projects-title"
       >
         <div
           ref={scaleFrameRef}
-          className="mx-auto w-full max-w-[68rem]"
+          className="mx-auto w-full max-w-[84rem] 2xl:max-w-[96rem]"
           style={desktopHeight !== null ? { height: `${desktopHeight}px` } : undefined}
         >
           <div
             ref={scaleContentRef}
-            className="flex w-full max-w-[68rem] flex-col gap-5 lg:gap-4"
+            className="flex w-full max-w-[84rem] flex-col gap-5 lg:gap-4 2xl:max-w-[96rem]"
             style={
               desktopScale !== 1
                 ? {
@@ -178,15 +178,20 @@ export function ProjectsSection() {
                       className="group block cursor-pointer text-left"
                       aria-label={`Open details for ${project.title}`}
                     >
-                        <div className="project-image-wrap relative overflow-hidden rounded-[0.95rem]">
+                        <div
+                          className="project-image-wrap relative w-full overflow-hidden rounded-[0.95rem]"
+                          style={{ aspectRatio: project.imageAspectRatio ?? "16 / 10" }}
+                        >
                           {project.image ? (
-                            <Image
-                              src={project.image}
-                              alt={`${project.title} screenshot`}
-                              fill
-                              className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
-                              sizes="(max-width: 767px) 100vw, 42vw"
-                            />
+                          <Image
+                            key={`${project.image}-${project.imageVersion ?? "base"}`}
+                            src={project.image}
+                            alt={`${project.title} screenshot`}
+                            fill
+                            unoptimized
+                            className="project-image-media object-contain object-[center_42%] transition-transform duration-300 group-hover:scale-[1.01]"
+                            sizes="(max-width: 767px) 100vw, 42vw"
+                          />
                           ) : (
                             <div className="project-image-placeholder">
                               <span>{project.title}</span>
@@ -215,14 +220,14 @@ export function ProjectsSection() {
 
       {activeProject ? (
         <div
-          className="project-modal-overlay fixed inset-0 z-50 flex items-center justify-center px-4 py-6 sm:px-6"
+          className="project-modal-overlay fixed inset-0 z-50 overflow-y-auto px-3 py-3 sm:flex sm:items-center sm:justify-center sm:px-6 sm:py-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-detail-title"
           onClick={() => setActiveProjectIndex(null)}
         >
           <div
-            className="project-modal project-modal--enter relative w-full max-w-4xl rounded-[1.75rem] p-4 sm:p-5"
+            className="project-modal project-modal--enter relative mx-auto w-full max-w-4xl rounded-[1.5rem] p-3 sm:max-w-5xl sm:rounded-[1.75rem] sm:p-5 2xl:max-w-6xl"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -234,15 +239,20 @@ export function ProjectsSection() {
               x
             </button>
 
-            <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-              <div className="project-modal__image project-image-wrap relative min-h-[18rem] overflow-hidden rounded-[1.2rem] sm:min-h-[22rem]">
+            <div className="grid gap-4 sm:gap-5 lg:grid-cols-[1fr_1.08fr] lg:items-center 2xl:grid-cols-[1.05fr_1fr]">
+              <div
+                className="project-modal__image relative w-full overflow-hidden rounded-[1rem] sm:rounded-[1.2rem]"
+                style={{ aspectRatio: activeProject.imageAspectRatio ?? "16 / 10" }}
+              >
                 <div className="project-modal__image-inner absolute inset-x-1 inset-y-2 sm:inset-x-2 sm:inset-y-3">
                   {activeProject.image ? (
                     <Image
+                      key={`${activeProject.image}-${activeProject.imageVersion ?? "base"}`}
                       src={activeProject.image}
                       alt={`${activeProject.title} screenshot`}
                       fill
-                      className="scale-[1.12] object-contain object-center"
+                      unoptimized
+                      className="project-image-media object-contain object-center"
                       sizes="(max-width: 1023px) 100vw, 52vw"
                     />
                   ) : (
@@ -260,12 +270,12 @@ export function ProjectsSection() {
                 </p>
                 <h3
                   id="project-detail-title"
-                  className="mt-1 text-[2rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.35rem]"
+                  className="mt-1 text-[1.8rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.35rem]"
                 >
                   {activeProject.title}
                 </h3>
-                <p className="mt-3 text-base leading-7 text-stone-700">
-                  {activeProject.description ?? activeProject.summary}
+                <p className="mt-3 text-[0.98rem] leading-7 text-stone-700 sm:text-base">
+                  {activeProject.description}
                 </p>
 
                 {activeProject.links?.length ? (

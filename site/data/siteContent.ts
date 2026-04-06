@@ -69,6 +69,8 @@ export const siteContent = {
         title: "personal portfolio site",
         caption: "this website! live at calvinpun.com",
         image: "/portfolio.png",
+        imageAspectRatio: "3024 / 1596",
+        imageVersion: "2026-04-05-2",
         href: "https://github.com/CalvinPun/portfolio",
         description:
           "I built a scrapbook-inspired portfolio with Next.js, React, and TailwindCSS. I designed most of the site components and icons using Figma, and implemented a separate mobile view for smaller screens. I opted to create my own website instead of using a template/website builder because I wanted to have full control over the design and functionality, and it was a fun opportunity to practice my frontend development skills! ",

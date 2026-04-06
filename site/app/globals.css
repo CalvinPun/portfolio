@@ -303,7 +303,6 @@ a {
 }
 
 .project-image-wrap {
-  min-height: 12.75rem;
   background: linear-gradient(180deg, rgba(228, 221, 208, 0.55), rgba(214, 202, 186, 0.8));
   border: 1px solid rgba(127, 97, 65, 0.14);
   box-shadow:
@@ -311,10 +310,14 @@ a {
     0 8px 18px rgba(62, 42, 22, 0.08);
 }
 
+.project-image-media {
+  background:
+    linear-gradient(180deg, rgba(248, 242, 232, 0.98) 0%, rgba(241, 232, 218, 0.98) 100%);
+}
+
 .project-image-placeholder {
   display: flex;
   height: 100%;
-  min-height: 12.75rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -337,6 +340,8 @@ a {
   box-shadow:
     0 18px 42px rgba(47, 30, 17, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  max-height: calc(100dvh - 1.5rem);
+  overflow-y: auto;
 }
 
 .project-modal--enter {
@@ -355,7 +360,7 @@ a {
 }
 
 .project-modal__body {
-  padding: 0.25rem 0.15rem 0.15rem;
+  padding: 0.5rem 0.2rem 0.2rem;
 }
 
 .project-modal__image {
@@ -372,20 +377,21 @@ a {
 
 .project-modal__close {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 0.8rem;
+  top: 0.8rem;
   display: inline-flex;
-  height: 2.25rem;
-  width: 2.25rem;
+  height: 2.6rem;
+  width: 2.6rem;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(118, 88, 59, 0.18);
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.86);
   color: #3f3125;
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
+  z-index: 2;
   transition:
     background-color 0.2s ease,
     transform 0.2s ease,
@@ -422,6 +428,24 @@ a {
   border-color: rgba(118, 88, 59, 0.28);
   box-shadow: 0 8px 18px rgba(62, 42, 22, 0.08);
   transform: translateY(-1px);
+}
+
+@media (min-width: 640px) {
+  .project-modal {
+    max-height: calc(100dvh - 3rem);
+  }
+
+  .project-modal__body {
+    padding: 0.75rem 0.4rem 0.35rem;
+  }
+
+  .project-modal__close {
+    right: 1rem;
+    top: 1rem;
+    height: 2.35rem;
+    width: 2.35rem;
+    font-size: 1.05rem;
+  }
 }
 
 /* Polaroid — tilt applies to image + caption together */
