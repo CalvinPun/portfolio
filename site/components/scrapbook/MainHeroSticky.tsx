@@ -9,7 +9,8 @@ type MainHeroStickyProps = {
     github: string;
     linkedin: string;
     instagram: string;
-    youtube: string;
+    spotify?: string;
+    youtube?: string;
     email: string;
   };
 };
@@ -52,6 +53,7 @@ export function MainHeroSticky({
           github={social.github}
           linkedin={social.linkedin}
           instagram={social.instagram}
+          spotify={social.spotify}
           youtube={social.youtube}
           email={social.email}
         />

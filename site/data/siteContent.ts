@@ -10,7 +10,7 @@ export const siteContent = {
         github: "https://github.com/CalvinPun",
         linkedin: "https://www.linkedin.com/in/",
         instagram: "https://www.instagram.com/calvin_pun/",
-        youtube: "https://www.youtube.com/@corrotic",
+        spotify: "https://open.spotify.com/user/31riatjcvoh2ldnvsv7kqiezdhwy?si=582fbd0d59bf467f",
         email: "cp4295@nyu.edu",
       },
     },

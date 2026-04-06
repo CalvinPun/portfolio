@@ -7,7 +7,8 @@ type SocialLinksProps = {
   github: string;
   linkedin: string;
   instagram: string;
-  youtube: string;
+  spotify?: string;
+  youtube?: string;
   email: string;
 };
 
@@ -25,7 +26,7 @@ function IconHoverLabel({ children }: { children: string }) {
   );
 }
 
-export function SocialLinks({ github, linkedin, instagram, youtube, email }: SocialLinksProps) {
+export function SocialLinks({ github, linkedin, instagram, spotify, youtube, email }: SocialLinksProps) {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = useCallback(async () => {
@@ -118,32 +119,62 @@ export function SocialLinks({ github, linkedin, instagram, youtube, email }: Soc
         </span>
         <IconHoverLabel>instagram</IconHoverLabel>
       </a>
-      <a
-        href={youtube}
-        className={`group relative ${ICON_WRAP_CLASS}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="YouTube channel @corrotic"
-      >
-        <span className="relative block h-9 w-9 shrink-0">
-          <Image
-            src="/youtube.svg"
-            alt=""
-            fill
-            className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
-            aria-hidden
-          />
-          <svg
-            className="relative h-9 w-9 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-focus-visible:opacity-100"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden
-          >
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-          </svg>
-        </span>
-        <IconHoverLabel>youtube</IconHoverLabel>
-      </a>
+      {spotify ? (
+        <a
+          href={spotify}
+          className={`group relative ${ICON_WRAP_CLASS}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Spotify profile"
+        >
+          <span className="relative block h-9 w-9 shrink-0">
+            <Image
+              src="/spotify.svg"
+              alt=""
+              fill
+              className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
+              aria-hidden
+            />
+            <svg
+              className="relative h-9 w-9 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-focus-visible:opacity-100"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden
+            >
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 6.628 5.373 12 12 12 6.628 0 12-5.372 12-12 0-6.627-5.372-12-12-12zm5.504 17.34a.75.75 0 0 1-1.032.247c-2.826-1.728-6.382-2.12-10.569-1.166a.75.75 0 0 1-.333-1.462c4.58-1.045 8.51-.6 11.684 1.34a.75.75 0 0 1 .25 1.04zm1.474-3.281a.938.938 0 0 1-1.29.31c-3.235-1.988-8.166-2.565-11.992-1.402a.937.937 0 1 1-.546-1.794c4.374-1.33 9.816-.69 13.519 1.585a.938.938 0 0 1 .309 1.301zm.126-3.418c-3.88-2.304-10.284-2.517-13.988-1.41a1.125 1.125 0 1 1-.644-2.156c4.25-1.27 11.318-1.024 15.782 1.627a1.125 1.125 0 1 1-1.15 1.939z" />
+            </svg>
+          </span>
+          <IconHoverLabel>spotify</IconHoverLabel>
+        </a>
+      ) : null}
+      {youtube ? (
+        <a
+          href={youtube}
+          className={`group relative ${ICON_WRAP_CLASS}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="YouTube channel @corrotic"
+        >
+          <span className="relative block h-9 w-9 shrink-0">
+            <Image
+              src="/youtube.svg"
+              alt=""
+              fill
+              className="pointer-events-none absolute inset-0 h-full w-full object-contain opacity-100 transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-focus-visible:opacity-0"
+              aria-hidden
+            />
+            <svg
+              className="relative h-9 w-9 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-focus-visible:opacity-100"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden
+            >
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+          </span>
+          <IconHoverLabel>youtube</IconHoverLabel>
+        </a>
+      ) : null}
       <div className="flex items-start gap-2">
         <button
           type="button"
