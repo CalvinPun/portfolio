@@ -117,7 +117,7 @@ export function AboutSection() {
         <div className="mx-auto flex w-full max-w-[28rem] flex-col gap-6 px-4 pb-3 pt-3">
           <div className={`about-heading mx-auto max-w-2xl text-center${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
             <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
-            <h2 className="mt-1 text-[2.45rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.9rem]">
+            <h2 className="mt-1 text-[2.45rem] font-semibold tracking-[-0.03em] text-stone-900 sm:text-[2.9rem]">
               {sectionTitle}
             </h2>
           </div>
@@ -178,7 +178,7 @@ export function AboutSection() {
         <div className="mx-auto mb-4 w-full max-w-[min(100%,var(--folder-vw-cap),106rem)] px-4 sm:mb-5 sm:px-6">
           <div className={`about-heading mx-auto max-w-2xl text-center${isVisible ? " is-visible" : ""}${isExiting ? " is-exiting" : ""}`}>
             <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
-            <h2 className="mt-1 text-[2.3rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]">
+            <h2 className="mt-1 text-[2.3rem] font-semibold tracking-[-0.03em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]">
               {sectionTitle}
             </h2>
           </div>

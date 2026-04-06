@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Caveat, DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
+const dmSans = localFont({
+  src: "./fonts/DMSans-VariableFont_opsz,wght.ttf",
   variable: "--font-dm-sans",
 });
 
-const caveat = Caveat({
-  subsets: ["latin"],
+const caveat = localFont({
+  src: "./fonts/Caveat-VariableFont_wght.ttf",
   variable: "--font-caveat",
 });
 

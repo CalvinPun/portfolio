@@ -149,7 +149,7 @@ export function ProjectsSection() {
               <p className="font-hand text-[1.45rem] tracking-[0.08em] text-stone-700 sm:text-[1.6rem]">{eyebrow}</p>
               <h2
                 id="projects-title"
-                className="mt-1 text-[2.3rem] font-semibold tracking-[-0.05em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]"
+                className="mt-1 text-[2.3rem] font-semibold tracking-[-0.03em] text-stone-900 sm:text-[2.75rem] lg:text-[2.55rem]"
               >
                 {title}
               </h2>
