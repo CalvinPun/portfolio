@@ -18,8 +18,7 @@ export const metadata: Metadata = {
     default: "Calvin Pun",
     template: "%s | Calvin Pun",
   },
-  description:
-    "Scrapbook-inspired portfolio of Calvin Pun, a CS + Math student building thoughtful, visually polished web experiences.",
+  description: "CS + Math @ NYU",
   applicationName: "Calvin Pun",
   authors: [{ name: "Calvin Pun", url: "https://calvinpun.com" }],
   creator: "Calvin Pun",
@@ -40,24 +39,13 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://calvinpun.com",
     title: "Calvin Pun",
-    description:
-      "Calvin Pun's Portfolio",
+    description: "CS + Math @ NYU",
     siteName: "Calvin Pun",
-    images: [
-      {
-        url: "/portfolio.png",
-        width: 3024,
-        height: 1596,
-        alt: "Preview of Calvin Pun's portfolio website",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Calvin Pun",
-    description:
-      "Scrapbook-inspired portfolio of Calvin Pun, a CS + Math student building thoughtful, visually polished web experiences.",
-    images: ["/portfolio.png"],
+    description: "CS + Math @ NYU",
   },
   category: "technology",
 };
