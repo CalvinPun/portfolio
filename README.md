@@ -2,7 +2,7 @@
 
 personal portfolio site! 
 
-**live site:** [calvinpun.dev](https://calvinpun.dev)
+**live site:** [calvinpun.com](https://calvinpun.com)
 
 ## tech stack
 
@@ -14,7 +14,7 @@ personal portfolio site!
 | Language  | [TypeScript](https://www.typescriptlang.org/)                                                              |
 | Styling   | [Tailwind CSS](https://tailwindcss.com/) v4 (via `@import "tailwindcss"` in `site/app/globals.css`)        |
 | Linting   | [ESLint](https://eslint.org/) with `eslint-config-next`                                                    |
-| Fonts     | [next/font](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) (e.g. Caveat, DM Sans) |
+| Fonts     | [next/font/local](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) with local Caveat + DM Sans files |
 
 
 the repository root contains the Next.js app folder at `**site/`** plus the usual repo metadata files.
@@ -55,12 +55,14 @@ Run these from `**site/**`:
 
 ## project structure
 
-- `site/app/` — App Router: `layout.tsx`, `page.tsx`, `globals.css`
+- `site/app/` — App Router: `layout.tsx`, `page.tsx`, `globals.css`, `robots.ts`, `sitemap.ts`
 - `site/components/` — UI (e.g. `scrapbook/`, `sections/`, `layout/`)
 - `site/data/` — Editable copy and URLs (`siteContent.ts`)
 - `site/public/` — Static assets (e.g. images referenced as `/filename.jpg`)
+- `site/app/fonts/` — local font files used by `next/font/local`
 
 ## content and assets
 
 - **Copy and social URLs:** edit `site/data/siteContent.ts`
 - **Images:** add files under `site/public/` and reference paths like `/me.jpg` in `siteContent` or components
+- **Fonts:** add local font files under `site/app/fonts/`
