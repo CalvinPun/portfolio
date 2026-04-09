@@ -1,4 +1,72 @@
-export const siteContent = {
+type ProjectLink = {
+  label: string;
+  href: string;
+};
+
+type ProjectItem = {
+  title: string;
+  caption: string;
+  image?: string;
+  imageAspectRatio?: string;
+  imageVersion?: string;
+  href?: string;
+  description?: string;
+  links?: ProjectLink[];
+};
+
+type SiteContent = {
+  hero: {
+    polaroidCaption: string;
+    sticky: {
+      headline: string;
+      headlineEmoji: string;
+      bodyLead: string;
+      bodyAccent: string;
+      social: {
+        github: string;
+        linkedin: string;
+        instagram: string;
+        spotify: string;
+        email: string;
+      };
+    };
+    locationNote: string;
+    photoPlaceholderText: string;
+    photoSrc: string | null;
+  };
+  about: {
+    eyebrow: string;
+    sectionTitle: string;
+    notebookTitle: string;
+    pocketPolaroid: {
+      src: string;
+      alt: string;
+      caption: string;
+    };
+    pocketPolaroid2: {
+      src: string;
+      alt: string;
+      caption: string;
+    };
+    pocketScrap: string;
+    bucketList: {
+      title: string;
+      items: Array<{
+        text: string;
+        crossed?: boolean;
+      }>;
+    };
+    notebookLines: string[];
+  };
+  projects: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: ProjectItem[];
+  };
+};
+
+export const siteContent: SiteContent = {
   hero: {
     polaroidCaption: "— that's me! :)",
     sticky: {
@@ -116,4 +184,4 @@ export const siteContent = {
       // },
     ],
   },
-} as const;
+};
