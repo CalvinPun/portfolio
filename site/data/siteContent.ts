@@ -157,7 +157,7 @@ export const siteContent: SiteContent = {
         description:
           "I built this Chrome extension using JavaScript and the Chrome Extensions API (Manifest V3) to help a friend who wanted a better way to stay on top of their evenings. It counts down your free time before bed, factoring in however long your nightly routine takes, and sends notifications at 30 minutes, 5 minutes, and when time's up, so you're never caught off guard. It also features a smart To-Do list that allows users to create tasks and assign them to specific time intervals, which can be sorted and marked as complete. It also tells the user whether or not it would be feasible to complete before their bedtime.",
         links:[
-          {label: "Pending Review", href: ""},
+          {label: "Store Page", href: "https://chromewebstore.google.com/detail/time-grasp/jackjcddpfmdnemggbhaehkkmmkfdfjd?authuser=0&hl=en"},
           { label: "GitHub", href: "https://github.com/CalvinPun/time-grasp"},
         ]
       },
